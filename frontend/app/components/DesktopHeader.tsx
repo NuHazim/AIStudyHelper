@@ -21,7 +21,7 @@ export default function DesktopHeader(){
                 <i className="fa-solid fa-book-open-reader bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white p-2.5 rounded-lg text-2xl font-medium shadow-[0_0_18px_rgba(108,108,245,0.5)]"></i>
                 <h1 className="text-xl font-bold">Clock In</h1>
             </div>
-            <div className="flex gap-6 items-center">
+            <div className="flex gap-6 justify-center items-center">
                 <p className="text-gray-400 hover:cursor-pointer hover:text-white">Features</p>
                 <p className="text-gray-400 hover:cursor-pointer hover:text-white">AI Assistant</p>
                 <p className="text-gray-400 hover:cursor-pointer hover:text-white">Productivity</p>
