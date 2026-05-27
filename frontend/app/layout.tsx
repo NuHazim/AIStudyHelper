@@ -8,6 +8,9 @@ const fontName =Work_Sans({
 
 export const metadata = {
   title: "AI Study Helper",
+  icons:{
+    icon:"/images/logo.svg",
+  }
 };
 
 export default function RootLayout({
