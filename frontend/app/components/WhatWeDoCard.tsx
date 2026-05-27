@@ -11,7 +11,7 @@ export default function WhatWeDoCard({iconClass,title,desc,smallCat,smallCatColo
     const catColorList=smallCatColor.split(",")
     const catBgColorList=smallCatBgColor.split(",")
     return(
-        <div className="hover:-translate-y-2 transition-all duration-200 ease-in-out max-w-80 bg-[rgba(108,108,245,0.6)]/20 backdrop-blur-2xl shadow-lg p-6 rounded-lg border border-[rgba(108,108,245,0.6)]">
+        <div className="-z-2 w-full hover:-translate-y-2 transition-all duration-200 ease-in-out bg-[rgba(108,108,245,0.6)]/20 backdrop-blur-2xl shadow-lg p-6 rounded-lg border border-[rgba(108,108,245,0.6)]">
             <i className={iconClass}></i>
             <p className="mt-2"><strong className="text-[#a5a5ff]">{title}</strong></p>
             <p className="text-[#a5a5ff]/60 mt-2 mb-6">{desc}</p>

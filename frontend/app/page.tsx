@@ -38,11 +38,16 @@ export default function Home() {
         </div>
 
       </div>
-      <div className="mt-15 flex flex-col gap-6 justify-center items-center">
+      <div className="py-20 flex flex-col gap-6 justify-center items-center">
         <p className="text-[#a5a5ff] font-bold">WHAT CLOCK IN DOES</p>
-        <h1 className="text-5xl font-bold"><span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">Everything</span> you need to <span className="bg-gradient-to-r from-[#e0e0ff] to-[#a5a5ff] bg-clip-text text-transparent">survive university</span></h1>
-        <p className="text-[#a5a5ff]">A complete <strong>AI-powered productivity ecosystem</strong> designed from the ground up for students who want to perform at their peak without burning out.</p>
-        <div className="flex flex-wrap gap-4 max-w-300 justify-center">
+        <h1 className="text-3xl md:text-5xl font-bold text-center px-4">
+          <span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">Everything</span> you need to{" "}
+          <span className="bg-gradient-to-r from-[#e0e0ff] to-[#a5a5ff] bg-clip-text text-transparent">survive university</span>
+        </h1>
+        <p className="text-[#a5a5ff] text-center px-4 max-w-2xl">
+          A complete <strong>AI-powered productivity ecosystem</strong> designed from the ground up for students who want to perform at their peak without burning out.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full px-3 md:px-0 max-w-5xl">
           <WhatWeDoCard
             iconClass="fa-regular fa-clock text-[#9b81e9] p-2 text-xl bg-[#252248] rounded-lg"
             title="AI Task & Workflow Generation"
@@ -91,6 +96,16 @@ export default function Home() {
             smallCatColor="#e2ac24,#1d3ea0"
             smallCatBgColor="#352c25,#192748"
           />
+        </div>
+      </div>
+      <div className="flex justify-center items-center">
+        <div>
+          <p className="text-[#a5a5ff] font-bold">AI ASSISTANT</p>
+          <h1 className="text-5xl font-bold">Your intelligent <br/><span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">academic co-pilot</span></h1>
+          <p className="text-[#a5a5ff] max-w-xl py-4"><strong>More than a Chatbot.</strong> Clock In's AI <strong>understands</strong> your academic workload, builds workflows, and coaches you through the <strong>hard moments</strong> with <strong>emotional intelligence.</strong></p>
+        </div>
+        <div className="flex-1 flex justify-center items-center max-w-lg w-full">
+          <img src="/images/heroImage.webp" className="-z-2 animate-float w-full h-auto" />
         </div>
       </div>
     </div>
