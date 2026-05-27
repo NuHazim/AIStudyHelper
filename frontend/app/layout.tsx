@@ -7,7 +7,7 @@ const fontName =Work_Sans({
 })
 
 export const metadata = {
-  title: "AI Study Helper",
+  title: "Clock In",
   icons:{
     icon:"/images/logo.svg",
   }
