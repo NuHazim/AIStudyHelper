@@ -22,10 +22,9 @@ export default function DesktopHeader(){
                 <h1 className="text-xl font-bold bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">Clock In</h1>
             </div>
             <div className="flex gap-6 justify-center items-center">
-                <p className="text-gray-400 hover:cursor-pointer hover:text-white">Features</p>
-                <p className="text-gray-400 hover:cursor-pointer hover:text-white">AI Assistant</p>
-                <p className="text-gray-400 hover:cursor-pointer hover:text-white">Productivity</p>
-                <p className="text-gray-400 hover:cursor-pointer hover:text-white">Reviews</p>
+                <a href="#features" className="text-gray-400 hover:cursor-pointer hover:text-white">Features</a>
+                <a href="#aiAssistant" className="text-gray-400 hover:cursor-pointer hover:text-white">AI Assistant</a>
+                <a href="#productivity" className="text-gray-400 hover:cursor-pointer hover:text-white">Productivity</a>
             </div>
             <div className="flex gap-3 items-center">
                 <Link href="" className="transition-all duration-200 ease-in-out bg-transparent text-[#a5a5ff] border border-[rgba(108,108,245,0.6)] px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-[rgba(108,108,245,0.6)] hover:text-white">Sign In</Link>

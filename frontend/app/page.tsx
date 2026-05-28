@@ -55,7 +55,7 @@ export default function Home() {
         </div>
 
       </div>
-      <div className="py-20 flex flex-col gap-6 justify-center items-center">
+      <div id="features" className="py-20 flex flex-col gap-6 justify-center items-center">
         <p className="text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-6 rounded-4xl text-sm border">WHAT CLOCK IN DOES</p>
         <h1 className="text-3xl md:text-5xl font-bold text-center px-4">
           <span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">Everything</span> you need to{" "}
@@ -115,7 +115,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="flex py-20 justify-center md:gap-8 items-center">
+      <div id="aiAssistant" className="flex py-20 justify-center md:gap-8 items-center">
         <div className="flex flex-col items-center md:items-start">
           <p className="-z-2 text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-6 rounded-4xl text-sm border inline-block mb-4">AI ASSISTANT</p>
           <h1 className="text-3xl font-bold text-center md:text-left md:text-5xl">Your intelligent <br/><span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">academic co-pilot</span></h1>
@@ -147,25 +147,60 @@ export default function Home() {
           <img src="/images/heroImage.webp" className="-z-2 animate-float w-full h-auto" />
         </div>
       </div>
-      <div className="flex justify-center items-center flex-col gap-4">
-        <p className="-z-2 text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-6 rounded-4xl text-sm border inline-block mb-4">PRODUCTIVITY ANALYTICS</p>
-        <h1 className="text-3xl font-bold text-center md:text-left md:text-5xl"><span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">Know exactly</span><span className="bg-gradient-to-r from-[#e0e0ff] to-[#a5a5ff] bg-clip-text text-transparent"> where you stand</span></h1>
-        <p className="text-[#a5a5ff] text-center px-4 max-w-2xl"><strong>Real-time dashboards</strong> that surface insights that actually matter for <strong>your academic performance.</strong></p>
-        <div className="flex flex-wrap gap-5 p-5 max-w-6xl">
-          <div className={`transition-all duration-200 ease-in-out flex-1 min-w-[260px] bg-[#050510] ${cardBase}`}>
+      <div id="productivity" className="flex flex-col items-center gap-6 px-4 md:px-8">
+        {/* TAG */}
+        <p className="-z-2 text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-5 md:px-6 rounded-4xl text-xs md:text-sm border inline-block">
+          PRODUCTIVITY ANALYTICS
+        </p>
+
+        {/* TITLE */}
+        <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-center leading-tight">
+          <span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">
+            Know exactly
+          </span>{" "}
+          <span className="bg-gradient-to-r from-[#e0e0ff] to-[#a5a5ff] bg-clip-text text-transparent">
+            where you stand
+          </span>
+        </h1>
+
+        {/* DESCRIPTION */}
+        <p className="text-[#a5a5ff] text-center text-sm md:text-base px-2 max-w-2xl">
+          <strong>Real-time dashboards</strong> that surface insights that actually matter for{" "}
+          <strong>your academic performance.</strong>
+        </p>
+
+        {/* GRID */}
+        <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-5 md:gap-6 p-2 md:p-4">
+
+          {/* WEEKLY HOURS - FULL WIDTH ON LG */}
+          <div className="md:col-span-6 lg:col-span-7 bg-[#050510] rounded-2xl">
             <WeeklyStudyHours />
           </div>
-          <div className={`transition-all duration-200 ease-in-out flex-1 min-w-[220px] bg-[#050510] p-7 flex flex-col ${cardBase}`}>
-            <p className="text-xl mb-1">🔥</p>
-            <p className="font-bold text-[#e8e8ff]">Current Streak</p>
-            <p className="text-[#3a3a7a] text-sm font-mono mb-4">Days studied in a row</p>
-            <h1 className="my-4 bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent text-7xl font-bold leading-none">
+
+          {/* STREAK CARD */}
+          <div className="md:col-span-6 lg:col-span-5 bg-[#050510] rounded-2xl p-5 md:p-7 flex flex-col">
+            <p className="text-lg md:text-xl mb-1">🔥</p>
+
+            <p className="font-bold text-[#e8e8ff] text-sm md:text-base">
+              Current Streak
+            </p>
+
+            <p className="text-[#3a3a7a] text-xs md:text-sm font-mono mb-4">
+              Days studied in a row
+            </p>
+
+            <h1 className="my-3 md:my-4 bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent text-5xl md:text-7xl font-bold leading-none">
               14
             </h1>
-            <p className="font-bold text-[#a5a5ff] text-sm">Longest: 21 days — Keep going!</p>
+
+            <p className="font-bold text-[#a5a5ff] text-xs md:text-sm">
+              Longest: 21 days — Keep going!
+            </p>
           </div>
-          <div className={`transition-all duration-200 ease-in-out w-full bg-[#050510] ${cardBase}`}>
-            <StudyHeatmap/>
+
+          {/* HEATMAP - FULL WIDTH */}
+          <div className="md:col-span-6 lg:col-span-12 bg-[#050510] rounded-2xl">
+            <StudyHeatmap />
           </div>
 
         </div>

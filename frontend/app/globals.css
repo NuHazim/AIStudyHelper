@@ -31,7 +31,9 @@
     --foreground: #ededed;
   }
 }
-
+html {
+  scroll-behavior: smooth;
+}
 body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
