@@ -4,6 +4,7 @@ import WhatWeDoCard from "./components/WhatWeDoCard";
 import AITask from "./components/AITask";
 import StudyHeatmap from "./components/StudyHeatMap";
 import WeeklyStudyHours from "./components/WeeklyStudyHours";
+import Footer from "./components/Footer";
 export default function Home() {
   const cardBase = `
     relative overflow-hidden rounded-2xl
@@ -175,6 +176,7 @@ export default function Home() {
         <p className="text-[#a5a5ff] text-center px-4 max-w-2xl"><strong>Start now</strong> and make your <strong>parents proud</strong></p>
         <Link href="" className="bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-10 py-5 rounded-3xl text-2xl font-bold hover:shadow-[0_0_18px_rgba(108,108,245,0.5)]">Launch Dashboard <i className="fa-solid fa-arrow-right"></i></Link>
       </div>
+      <Footer/>
     </div>
   )
 }
