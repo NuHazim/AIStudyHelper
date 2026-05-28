@@ -169,7 +169,12 @@ export default function Home() {
 
         </div>
       </div>
-      
+      <div className="flex flex-col py-20 justify-center items-center gap-6">
+        <p className="-z-2 text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-6 rounded-4xl text-sm border inline-block mb-4">FREE TO START</p>
+        <h1 className="text-3xl font-bold text-center md:text-left md:text-5xl">Ready to <span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">Clock In</span> for your semester?</h1>
+        <p className="text-[#a5a5ff] text-center px-4 max-w-2xl"><strong>Start now</strong> and make your <strong>parents proud</strong></p>
+        <Link href="" className="bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-10 py-5 rounded-3xl text-2xl font-bold hover:shadow-[0_0_18px_rgba(108,108,245,0.5)]">Launch Dashboard <i className="fa-solid fa-arrow-right"></i></Link>
+      </div>
     </div>
   )
 }

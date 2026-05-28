@@ -16,10 +16,10 @@ export default function DesktopHeader(){
     }, [])
     return (
         <>
-        <div className={`flex justify-between h-18 items-center pl-8 pr-4 fixed top-0 right-0 left-0 transition-all duration-300 ease-in-out ${scrolled? "bg-white/10 backdrop-blur-lg shadow-lg":""}`}>
+        <div className={`z-10 flex justify-between h-18 items-center pl-8 pr-4 fixed top-0 right-0 left-0 transition-all duration-300 ease-in-out ${scrolled? "bg-white/10 backdrop-blur-lg shadow-lg":""}`}>
             <div className="flex gap-2 items-center hover:cursor-pointer">
                 <i className="fa-solid fa-book-open-reader bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white p-2.5 rounded-lg text-2xl font-medium shadow-[0_0_18px_rgba(108,108,245,0.5)]"></i>
-                <h1 className="text-xl font-bold">Clock In</h1>
+                <h1 className="text-xl font-bold bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">Clock In</h1>
             </div>
             <div className="flex gap-6 justify-center items-center">
                 <p className="text-gray-400 hover:cursor-pointer hover:text-white">Features</p>
