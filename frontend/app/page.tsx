@@ -1,7 +1,23 @@
 import Header from "./components/Header";
 import Link from "next/link";
 import WhatWeDoCard from "./components/WhatWeDoCard";
+import AITask from "./components/AITask";
+import StudyHeatmap from "./components/StudyHeatMap";
+import WeeklyStudyHours from "./components/WeeklyStudyHours";
 export default function Home() {
+  const cardBase = `
+    relative overflow-hidden rounded-2xl
+    border border-[rgba(165,165,255,0.1)]
+    card-hover cursor-pointer
+    before:absolute before:inset-0 before:rounded-2xl
+    before:bg-gradient-to-br before:from-[rgba(74,74,232,0.06)] before:to-transparent
+    before:opacity-0 before:transition-opacity before:duration-300
+    hover:before:opacity-100
+    hover:-translate-y-[5px]
+    hover:border-[rgba(165,165,255,0.35)]
+    hover:shadow-[0_0_0_1px_rgba(165,165,255,0.08),_0_20px_40px_rgba(10,10,46,0.6),_0_0_30px_rgba(74,74,232,0.12)]
+    active:-translate-y-[2px]
+  `
   return (
     <div className="min-h-screen">
       <Header/>
@@ -39,7 +55,7 @@ export default function Home() {
 
       </div>
       <div className="py-20 flex flex-col gap-6 justify-center items-center">
-        <p className="text-[#a5a5ff] font-bold">WHAT CLOCK IN DOES</p>
+        <p className="text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-6 rounded-4xl text-sm border">WHAT CLOCK IN DOES</p>
         <h1 className="text-3xl md:text-5xl font-bold text-center px-4">
           <span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">Everything</span> you need to{" "}
           <span className="bg-gradient-to-r from-[#e0e0ff] to-[#a5a5ff] bg-clip-text text-transparent">survive university</span>
@@ -98,16 +114,62 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="flex justify-center items-center">
-        <div>
-          <p className="text-[#a5a5ff] font-bold">AI ASSISTANT</p>
-          <h1 className="text-5xl font-bold">Your intelligent <br/><span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">academic co-pilot</span></h1>
-          <p className="text-[#a5a5ff] max-w-xl py-4"><strong>More than a Chatbot.</strong> Clock In's AI <strong>understands</strong> your academic workload, builds workflows, and coaches you through the <strong>hard moments</strong> with <strong>emotional intelligence.</strong></p>
+      <div className="flex py-20 justify-center md:gap-8 items-center">
+        <div className="flex flex-col items-center md:items-start">
+          <p className="-z-2 text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-6 rounded-4xl text-sm border inline-block mb-4">AI ASSISTANT</p>
+          <h1 className="text-3xl font-bold text-center md:text-left md:text-5xl">Your intelligent <br/><span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">academic co-pilot</span></h1>
+          <p className="text-[#a5a5ff] px-4 text-sm max-w-xl py-4 text-center md:text-left md:text-base md:px-0"><strong>More than a Chatbot.</strong> Clock In's AI <strong>understands</strong> your academic workload, builds workflows, and coaches you through the <strong>hard moments</strong> with <strong>emotional intelligence.</strong></p>
+          <div className="mx-4 md:mx-0">
+            <AITask
+              iconLogo="fa-regular fa-clipboard p-3 text-lg text-white bg-[#1fadaf] rounded-lg"
+              title="Task Breakdown Assistance"
+              desc="Breaks complex assignments into daily steps automatically."
+            />
+            <AITask
+              iconLogo="fa-regular fa-calendar p-3 text-lg text-white bg-[#e2ac24] rounded-lg"
+              title="Schedule Optimization"
+              desc="Finds the best study windows based on your calendar."
+            />
+            <AITask
+              iconLogo="fa-solid fa-person-chalkboard p-3 text-lg text-white bg-[#9b81e9] rounded-lg"
+              title="Motivational Coaching"
+              desc="Personalized encouragement when you need it most."
+            />
+            <AITask
+              iconLogo="fa-solid fa-fire-burner p-3 text-lg text-white bg-[#FFA500] rounded-lg"
+              title="Burnout Detection"
+              desc="Monitors workload and flags danger zones early."
+            />
+          </div>
         </div>
         <div className="flex-1 flex justify-center items-center max-w-lg w-full">
           <img src="/images/heroImage.webp" className="-z-2 animate-float w-full h-auto" />
         </div>
       </div>
+      <div className="flex justify-center items-center flex-col gap-4">
+        <p className="-z-2 text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-6 rounded-4xl text-sm border inline-block mb-4">PRODUCTIVITY ANALYTICS</p>
+        <h1 className="text-3xl font-bold text-center md:text-left md:text-5xl"><span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">Know exactly</span><span className="bg-gradient-to-r from-[#e0e0ff] to-[#a5a5ff] bg-clip-text text-transparent"> where you stand</span></h1>
+        <p className="text-[#a5a5ff] text-center px-4 max-w-2xl"><strong>Real-time dashboards</strong> that surface insights that actually matter for <strong>your academic performance.</strong></p>
+        <div className="flex flex-wrap gap-5 p-5 max-w-6xl">
+          <div className={`transition-all duration-200 ease-in-out flex-1 min-w-[260px] bg-[#050510] ${cardBase}`}>
+            <WeeklyStudyHours />
+          </div>
+          <div className={`transition-all duration-200 ease-in-out flex-1 min-w-[220px] bg-[#050510] p-7 flex flex-col ${cardBase}`}>
+            <p className="text-xl mb-1">🔥</p>
+            <p className="font-bold text-[#e8e8ff]">Current Streak</p>
+            <p className="text-[#3a3a7a] text-sm font-mono mb-4">Days studied in a row</p>
+            <h1 className="my-4 bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent text-7xl font-bold leading-none">
+              14
+            </h1>
+            <p className="font-bold text-[#a5a5ff] text-sm">Longest: 21 days — Keep going!</p>
+          </div>
+          <div className={`transition-all duration-200 ease-in-out w-full bg-[#050510] ${cardBase}`}>
+            <StudyHeatmap/>
+          </div>
+
+        </div>
+      </div>
+      
     </div>
   )
 }
