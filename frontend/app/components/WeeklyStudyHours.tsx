@@ -99,7 +99,7 @@ export default function WeeklyStudyHours({
   return (
     <div
       className="rounded-2xl p-7"
-      style={{ background: "#050510", fontFamily: "'Syne', sans-serif" }}
+      style={{ background: "#0a0a2e", fontFamily: "'Syne', sans-serif" }}
     >
       <p className="text-white text-[17px] font-bold mb-1">Weekly Study Hours</p>
       <p className="text-[#4e5070] text-[13px] mb-6">This week</p>

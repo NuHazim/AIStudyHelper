@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="py-12 bg-white/10 backdrop-blur-lg shadow-lg">
+    <div className="py-12 bg-[#050510] border-t border-[#1a1a5e]">
       <div className="max-w-6xl mx-auto px-6 flex flex-col gap-8">
 
         <div className="flex flex-col items-start gap-4">
@@ -37,7 +37,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10"></div>
+        <div className="border-t border-[#1a1a5e]"></div>
 
         <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 text-sm text-gray-400">
 
@@ -50,6 +50,6 @@ export default function Footer() {
         </div>
 
       </div>
-    </footer>
+    </div>
   );
 }

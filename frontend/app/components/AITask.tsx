@@ -15,7 +15,6 @@ export default function AITask({ iconLogo, title, desc }: AITaskInfo) {
       cursor-pointer relative overflow-hidden
       transition-all duration-250 ease-out
       hover:-translate-y-[3px]
-      -z-2
       hover:shadow-[0_0_0_1px_rgba(165,165,255,0.27),_0_8px_24px_rgba(165,165,255,0.2)]
     ">
 

@@ -14,7 +14,7 @@ function getLevel(h: number): 0 | 1 | 2 | 3 | 4 {
 // Uses your palette: #050510 #0a0a2e #1a1a5e #4a4ae8 #a5a5ff
 // Level 1 = #12124a (slight step between l0 and l2, stays on-brand)
 const CELL_CLASSES: Record<number, string> = {
-  0: "bg-[#0a0a2e] border border-[rgba(165,165,255,0.07)]",
+  0: "bg-[#050510] border border-[rgba(165,165,255,0.07)]",
   1: "bg-[#12124a] border border-[rgba(165,165,255,0.1)]",
   2: "bg-[#1a1a5e]",
   3: "bg-[#4a4ae8]",
@@ -75,7 +75,7 @@ export default function StudyHeatmapDemo() {
   return (
     <div
       className="relative overflow-hidden rounded-2xl p-6"
-      style={{ background: "#050510", border: "1px solid rgba(165,165,255,0.12)" }}
+      style={{ background: "#0a0a2e", border: "1px solid rgba(165,165,255,0.12)" }}
     >
       {/* Ambient glows */}
       <div className="pointer-events-none absolute -top-16 -left-16 w-60 h-60 rounded-full"

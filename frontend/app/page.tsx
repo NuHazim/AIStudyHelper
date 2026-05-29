@@ -43,7 +43,7 @@ export default function Home() {
             <Link href="/Login" className="bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-6 py-2.5 rounded-lg text-lg transition-all duration-200 ease-in-out hover:shadow-[0_0_18px_rgba(108,108,245,0.5)] text-center">
               <i className="fa-solid fa-bolt"></i> Start Now
             </Link>
-            <a href="#features" className="transition-all duration-200 ease-in-out bg-transparent text-[#a5a5ff] border border-[rgba(108,108,245,0.6)] px-6 py-2.5 rounded-lg text-lg hover:cursor-pointer hover:bg-[rgba(108,108,245,0.6)] hover:text-white text-center">
+            <a href="#features" className="transition-all duration-200 ease-in-out bg-transparent text-[#a5a5ff] border border-[rgba(108,108,245,0.6)] px-6 py-2.5 rounded-lg text-lg hover:cursor-pointer hover:bg-[#0a0a2e] hover:text-white text-center">
               See How it Works <i className="fa-solid fa-angle-right"></i>
             </a>
           </div>
@@ -148,7 +148,7 @@ export default function Home() {
         </div>
       </div>
       <div id="productivity" className="flex flex-col items-center gap-6 px-4 md:px-8">
-        <p className="-z-2 text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-5 md:px-6 rounded-4xl text-xs md:text-sm border inline-block">
+        <p className="text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-5 md:px-6 rounded-4xl text-xs md:text-sm border inline-block">
           PRODUCTIVITY ANALYTICS
         </p>
         <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-center leading-tight">
@@ -164,10 +164,10 @@ export default function Home() {
           <strong>your academic performance.</strong>
         </p>
         <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-5 md:gap-6 p-2 md:p-4">
-          <div className="md:col-span-6 lg:col-span-7 bg-[#050510] rounded-2xl">
+          <div className="md:col-span-6 lg:col-span-7 border border-[#a5a5ff] bg-[#0a0a2e] rounded-2xl">
             <WeeklyStudyHours />
           </div>
-          <div className="md:col-span-6 lg:col-span-5 bg-[#050510] rounded-2xl p-5 md:p-7 flex flex-col">
+          <div className="border border-[#a5a5ff] md:col-span-6 lg:col-span-5 bg-[#0a0a2e] rounded-2xl p-5 md:p-7 flex flex-col">
             <p className="text-lg md:text-xl mb-1">🔥</p>
             <p className="font-bold text-[#e8e8ff] text-sm md:text-base">
               Current Streak
@@ -182,7 +182,7 @@ export default function Home() {
               Longest: 21 days — Keep going!
             </p>
           </div>
-          <div className="md:col-span-6 lg:col-span-12 bg-[#050510] rounded-2xl">
+          <div className="md:col-span-6 lg:col-span-12 border border-[#a5a5ff] bg-[#0a0a2e] rounded-2xl">
             <StudyHeatmap />
           </div>
 
