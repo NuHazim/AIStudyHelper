@@ -164,10 +164,10 @@ export default function Home() {
           <strong>your academic performance.</strong>
         </p>
         <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-5 md:gap-6 p-2 md:p-4">
-          <div className="md:col-span-6 lg:col-span-7 border border-[#a5a5ff] bg-[#0a0a2e] rounded-2xl">
+          <div className="hover:-translate-y-2 transition-all duration-200 ease-in-out md:col-span-6 lg:col-span-7 border border-[#a5a5ff] bg-[#0a0a2e] rounded-2xl">
             <WeeklyStudyHours />
           </div>
-          <div className="border border-[#a5a5ff] md:col-span-6 lg:col-span-5 bg-[#0a0a2e] rounded-2xl p-5 md:p-7 flex flex-col">
+          <div className="hover:-translate-y-2 transition-all duration-200 ease-in-out border border-[#a5a5ff] md:col-span-6 lg:col-span-5 bg-[#0a0a2e] rounded-2xl p-5 md:p-7 flex flex-col">
             <p className="text-lg md:text-xl mb-1">🔥</p>
             <p className="font-bold text-[#e8e8ff] text-sm md:text-base">
               Current Streak
@@ -182,7 +182,7 @@ export default function Home() {
               Longest: 21 days — Keep going!
             </p>
           </div>
-          <div className="md:col-span-6 lg:col-span-12 border border-[#a5a5ff] bg-[#0a0a2e] rounded-2xl">
+          <div className="hover:-translate-y-2 transition-all duration-200 ease-in-out md:col-span-6 lg:col-span-12 border border-[#a5a5ff] bg-[#0a0a2e] rounded-2xl">
             <StudyHeatmap />
           </div>
 
@@ -192,7 +192,7 @@ export default function Home() {
         <p className="-z-2 text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-6 rounded-4xl text-sm border inline-block mb-4">FREE TO START</p>
         <h1 className="text-3xl font-bold text-center md:text-left md:text-5xl">Ready to <span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">Clock In</span> for your semester?</h1>
         <p className="text-[#a5a5ff] text-center px-4 max-w-2xl"><strong>Start now</strong> and make <strong>your future self proud</strong></p>
-        <Link href="/Login" className="bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-10 py-5 rounded-3xl text-2xl font-bold hover:shadow-[0_0_18px_rgba(108,108,245,0.5)]">Launch Dashboard <i className="fa-solid fa-arrow-right"></i></Link>
+        <Link href="/Login" className="transition-all duration-200 ease-in-out bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-10 py-5 rounded-3xl text-2xl font-bold hover:shadow-[0_0_18px_rgba(108,108,245,0.5)]">Launch Dashboard <i className="fa-solid fa-arrow-right"></i></Link>
       </div>
       <Footer/>
     </div>

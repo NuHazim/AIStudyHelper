@@ -23,7 +23,7 @@ export default function MobileHeader(){
             </div>
             <div className="flex gap-3 items-center">
                 <Link href="/Login" className="transition-all duration-200 ease-in-out bg-transparent text-[#a5a5ff] border border-[rgba(108,108,245,0.6)] px-3 py-2 rounded-lg text-xs hover:bg-[#0a0a2e] hover:text-white">Sign In</Link>
-                <Link href="/Login" className="bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-3 py-2 rounded-lg text-xs hover:shadow-[0_0_18px_rgba(108,108,245,0.5)]">Get Started Free</Link>
+                <Link href="/Login" className="transition-all duration-200 ease-in-out bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-3 py-2 rounded-lg text-xs hover:shadow-[0_0_18px_rgba(108,108,245,0.5)]">Get Started Free</Link>
             </div>
         </div>
         </>
