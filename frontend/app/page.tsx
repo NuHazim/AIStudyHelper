@@ -40,7 +40,7 @@ export default function Home() {
             <strong className="text-[#c8c8ff]">AI Tools</strong> designed to keep you focused and burnout-free.
           </p>
           <div className="flex flex-col sm:flex-row justify-center md:justify-start my-8 gap-4">
-            <Link href="/Login" className="bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-6 py-2.5 rounded-lg text-lg transition-all duration-200 ease-in-out hover:shadow-[0_0_18px_rgba(108,108,245,0.5)] text-center">
+            <Link href="/Dashboard" className="bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-6 py-2.5 rounded-lg text-lg transition-all duration-200 ease-in-out hover:shadow-[0_0_18px_rgba(108,108,245,0.5)] text-center">
               <i className="fa-solid fa-bolt"></i> Start Now
             </Link>
             <a href="#features" className="transition-all duration-200 ease-in-out bg-transparent text-[#a5a5ff] border border-[rgba(108,108,245,0.6)] px-6 py-2.5 rounded-lg text-lg hover:cursor-pointer hover:bg-[#0a0a2e] hover:text-white text-center">
