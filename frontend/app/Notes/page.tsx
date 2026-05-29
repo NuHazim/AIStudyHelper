@@ -4,7 +4,7 @@ export default function Analytics(){
         <div className="flex h-screen">
             <Sidebar/>
             <div className="bg-black flex-1 transition-all duration-300 ease-in-out">
-                analytics content
+                Notes content
             </div>
         </div>
     )

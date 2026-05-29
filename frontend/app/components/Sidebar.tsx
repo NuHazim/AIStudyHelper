@@ -22,7 +22,7 @@ const NAV_ITEMS = [
     links: [
       { id: "AIAssistant", icon: "◈", label: "AI Assistant" },
       { id: "FocusMode", icon: "◎", label: "Focus Mode" },
-      { id: "Analytics", icon: "∿", label: "Analytics" },
+      { id: "Notes", icon: "∿", label: "Notes" },
     ],
   },
   {
@@ -42,7 +42,7 @@ export default function Sidebar({ onLogout }: SidebarProps) {
   return (
     <aside
       className={[
-        "flex flex-col h-full overflow-hidden bg-[#0f0f14] border-r border-white/[0.06]",
+        "flex flex-col h-full overflow-hidden bg-[#0c0e1e] border-r border-white/[0.06]",
         "transition-all duration-300 ease-in-out",
         collapsed ? "w-[64px]" : "w-[250px]",
       ].join(" ")}
