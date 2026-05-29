@@ -40,12 +40,12 @@ export default function Home() {
             <strong className="text-[#c8c8ff]">AI Tools</strong> designed to keep you focused and burnout-free.
           </p>
           <div className="flex flex-col sm:flex-row justify-center md:justify-start my-8 gap-4">
-            <Link href="" className="bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-6 py-2.5 rounded-lg text-lg transition-all duration-200 ease-in-out hover:shadow-[0_0_18px_rgba(108,108,245,0.5)] text-center">
+            <Link href="/Login" className="bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-6 py-2.5 rounded-lg text-lg transition-all duration-200 ease-in-out hover:shadow-[0_0_18px_rgba(108,108,245,0.5)] text-center">
               <i className="fa-solid fa-bolt"></i> Start Now
             </Link>
-            <p className="transition-all duration-200 ease-in-out bg-transparent text-[#a5a5ff] border border-[rgba(108,108,245,0.6)] px-6 py-2.5 rounded-lg text-lg hover:cursor-pointer hover:bg-[rgba(108,108,245,0.6)] hover:text-white text-center">
+            <a href="#features" className="transition-all duration-200 ease-in-out bg-transparent text-[#a5a5ff] border border-[rgba(108,108,245,0.6)] px-6 py-2.5 rounded-lg text-lg hover:cursor-pointer hover:bg-[rgba(108,108,245,0.6)] hover:text-white text-center">
               See How it Works <i className="fa-solid fa-angle-right"></i>
-            </p>
+            </a>
           </div>
         </div>
 
@@ -148,12 +148,9 @@ export default function Home() {
         </div>
       </div>
       <div id="productivity" className="flex flex-col items-center gap-6 px-4 md:px-8">
-        {/* TAG */}
         <p className="-z-2 text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-5 md:px-6 rounded-4xl text-xs md:text-sm border inline-block">
           PRODUCTIVITY ANALYTICS
         </p>
-
-        {/* TITLE */}
         <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-center leading-tight">
           <span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">
             Know exactly
@@ -162,43 +159,29 @@ export default function Home() {
             where you stand
           </span>
         </h1>
-
-        {/* DESCRIPTION */}
         <p className="text-[#a5a5ff] text-center text-sm md:text-base px-2 max-w-2xl">
           <strong>Real-time dashboards</strong> that surface insights that actually matter for{" "}
           <strong>your academic performance.</strong>
         </p>
-
-        {/* GRID */}
         <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-5 md:gap-6 p-2 md:p-4">
-
-          {/* WEEKLY HOURS - FULL WIDTH ON LG */}
           <div className="md:col-span-6 lg:col-span-7 bg-[#050510] rounded-2xl">
             <WeeklyStudyHours />
           </div>
-
-          {/* STREAK CARD */}
           <div className="md:col-span-6 lg:col-span-5 bg-[#050510] rounded-2xl p-5 md:p-7 flex flex-col">
             <p className="text-lg md:text-xl mb-1">🔥</p>
-
             <p className="font-bold text-[#e8e8ff] text-sm md:text-base">
               Current Streak
             </p>
-
             <p className="text-[#3a3a7a] text-xs md:text-sm font-mono mb-4">
               Days studied in a row
             </p>
-
             <h1 className="my-3 md:my-4 bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent text-5xl md:text-7xl font-bold leading-none">
               14
             </h1>
-
             <p className="font-bold text-[#a5a5ff] text-xs md:text-sm">
               Longest: 21 days — Keep going!
             </p>
           </div>
-
-          {/* HEATMAP - FULL WIDTH */}
           <div className="md:col-span-6 lg:col-span-12 bg-[#050510] rounded-2xl">
             <StudyHeatmap />
           </div>
@@ -208,8 +191,8 @@ export default function Home() {
       <div className="flex flex-col py-20 justify-center items-center gap-6">
         <p className="-z-2 text-[#a5a5ff] font-bold bg-white/10 backdrop-blur-lg shadow-lg py-2 px-6 rounded-4xl text-sm border inline-block mb-4">FREE TO START</p>
         <h1 className="text-3xl font-bold text-center md:text-left md:text-5xl">Ready to <span className="bg-gradient-to-r from-[#a5a5ff] to-[#e0e0ff] bg-clip-text text-transparent">Clock In</span> for your semester?</h1>
-        <p className="text-[#a5a5ff] text-center px-4 max-w-2xl"><strong>Start now</strong> and make your <strong>parents proud</strong></p>
-        <Link href="" className="bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-10 py-5 rounded-3xl text-2xl font-bold hover:shadow-[0_0_18px_rgba(108,108,245,0.5)]">Launch Dashboard <i className="fa-solid fa-arrow-right"></i></Link>
+        <p className="text-[#a5a5ff] text-center px-4 max-w-2xl"><strong>Start now</strong> and make <strong>your future self proud</strong></p>
+        <Link href="/Login" className="bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white px-10 py-5 rounded-3xl text-2xl font-bold hover:shadow-[0_0_18px_rgba(108,108,245,0.5)]">Launch Dashboard <i className="fa-solid fa-arrow-right"></i></Link>
       </div>
       <Footer/>
     </div>
