@@ -2,7 +2,8 @@
 
 import Sidebar from "../components/Sidebar";
 import LIHeader from "../components/LIHeader";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Task {
@@ -166,13 +167,14 @@ function TaskItem({
 }
 
 function GroupCard({
-  group, onToggle, onDeleteTask, onDeleteGroup, onAddTask,
+  group, onToggle, onDeleteTask, onDeleteGroup, onAddTask, taskRefs,
 }: {
   group: Group;
   onToggle: (tid: string, gid: string) => void;
   onDeleteTask: (tid: string, gid: string) => void;
   onDeleteGroup: (gid: string) => void;
   onAddTask: (gid: string) => void;
+  taskRefs: React.MutableRefObject<Map<string, HTMLDivElement>>;
 }) {
   const done = group.tasks.filter(t => t.done).length;
   const total = group.tasks.length;
@@ -219,7 +221,19 @@ function GroupCard({
       {/* Tasks */}
       <div className="p-2 flex flex-col gap-1">
         {group.tasks.map(t => (
-          <TaskItem key={t.id} task={t} groupId={group.id} onToggle={onToggle} onDelete={onDeleteTask} />
+          <div
+            key={t.id}
+            ref={(el) => {
+              if (el) taskRefs.current.set(`${group.id}-${t.id}`, el);
+            }}
+          >
+            <TaskItem
+              task={t}
+              groupId={group.id}
+              onToggle={onToggle}
+              onDelete={onDeleteTask}
+            />
+          </div>
         ))}
       </div>
 
@@ -461,8 +475,42 @@ function ConfirmModal({ icon, title, desc, onCancel, onConfirm, confirmLabel }: 
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function Tasks() {
-  const [groups, setGroups] = useState<Group[]>(INITIAL_GROUPS);
+  const [groups, setGroups] = useState<Group[]>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("taskGroups");
+      if (saved) return JSON.parse(saved);
+    }
+    return INITIAL_GROUPS;
+  });
+
   const [modal, setModal] = useState<ModalState>({ type: "none" });
+  const taskRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+
+  // Persist groups to localStorage
+  useEffect(() => {
+    localStorage.setItem("taskGroups", JSON.stringify(groups));
+  }, [groups]);
+
+  // Highlight from URL parameters
+  const searchParams = useSearchParams();
+  const highlightTaskId = searchParams.get("highlightTask");
+  const highlightGroupId = searchParams.get("highlightGroup");
+
+  useEffect(() => {
+    if (highlightTaskId && highlightGroupId) {
+      const element = taskRefs.current.get(`${highlightGroupId}-${highlightTaskId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+        element.style.transition = "background 0.3s";
+        element.style.background = "rgba(74,74,232,0.2)";
+        setTimeout(() => {
+          element.style.background = "";
+        }, 2000);
+      }
+      // Clean URL after highlight
+      window.history.replaceState({}, "", "/Tasks");
+    }
+  }, [highlightTaskId, highlightGroupId]);
 
   const closeModal = useCallback(() => setModal({ type: "none" }), []);
 
@@ -550,11 +598,13 @@ export default function Tasks() {
             <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4.5">
               {groups.map(g => (
                 <GroupCard
-                  key={g.id} group={g}
+                  key={g.id}
+                  group={g}
                   onToggle={toggleTask}
                   onDeleteTask={(tid, gid) => setModal({ type: "deleteTask", taskId: tid, groupId: gid })}
                   onDeleteGroup={gid => setModal({ type: "deleteGroup", groupId: gid })}
                   onAddTask={gid => setModal({ type: "addTask", groupId: gid })}
+                  taskRefs={taskRefs}
                 />
               ))}
 

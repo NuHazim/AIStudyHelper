@@ -5,7 +5,6 @@ import Link from "next/link";
 import Sidebar from "../components/Sidebar";
 import LIHeader from "../components/LIHeader";
 
-// ─── Types (matching Task page) ─────────────────────────────────────────────
 interface Task {
   id: string;
   title: string;
@@ -22,16 +21,24 @@ interface Group {
   tasks: Task[];
 }
 
-// ─── Helper Functions ───────────────────────────────────────────────────────
-function daysUntil(deadline: string | null): number | null {
-  if (!deadline) return null;
-  const diff = new Date(deadline).getTime() - new Date().getTime();
+interface ReminderTask extends Task {
+  groupId: string;
+  groupName: string;
+  groupColor: string;
+}
+
+// Helper: days until deadline (from today)
+function daysUntil(deadline: string): number {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const due = new Date(deadline);
+  due.setHours(0, 0, 0, 0);
+  const diff = due.getTime() - today.getTime();
   return Math.ceil(diff / 86400000);
 }
 
 function formatDeadline(deadline: string): string {
   const days = daysUntil(deadline);
-  if (days === null) return "";
   if (days < 0) return "Overdue";
   if (days === 0) return "Today";
   if (days === 1) return "Tomorrow";
@@ -52,39 +59,11 @@ function getPriorityColor(priority: string): string {
   }
 }
 
-// ─── Main Component ─────────────────────────────────────────────────────────
 export default function Reminders() {
-  const [reminderTasks, setReminderTasks] = useState<
-    (Task & { groupId: string; groupName: string; groupColor: string })[]
-  >([]);
+  const [reminderTasks, setReminderTasks] = useState<ReminderTask[]>([]);
 
-  // Load groups from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem("taskGroups");
-    if (saved) {
-      const groups: Group[] = JSON.parse(saved);
-      const tasksWithDeadlines = groups.flatMap((group) =>
-        group.tasks
-          .filter((task) => task.deadline !== null && !task.done) // only pending tasks with deadlines
-          .map((task) => ({
-            ...task,
-            groupId: group.id,
-            groupName: group.name,
-            groupColor: group.color,
-          }))
-      );
-      // Sort by deadline (soonest first)
-      tasksWithDeadlines.sort(
-        (a, b) =>
-          new Date(a.deadline!).getTime() - new Date(b.deadline!).getTime()
-      );
-      setReminderTasks(tasksWithDeadlines);
-    }
-  }, []);
-
-  // Subscribe to storage changes (if Tasks page updates in another tab)
-  useEffect(() => {
-    const handleStorageChange = () => {
+    const loadReminders = () => {
       const saved = localStorage.getItem("taskGroups");
       if (saved) {
         const groups: Group[] = JSON.parse(saved);
@@ -98,6 +77,7 @@ export default function Reminders() {
               groupColor: group.color,
             }))
         );
+        // Sort by deadline globally (soonest first)
         tasksWithDeadlines.sort(
           (a, b) =>
             new Date(a.deadline!).getTime() - new Date(b.deadline!).getTime()
@@ -105,9 +85,123 @@ export default function Reminders() {
         setReminderTasks(tasksWithDeadlines);
       }
     };
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
+
+    loadReminders();
+    window.addEventListener("storage", loadReminders);
+    return () => window.removeEventListener("storage", loadReminders);
   }, []);
+
+  // Categorize tasks
+  const todayTomorrow: ReminderTask[] = [];
+  const thisWeek: ReminderTask[] = [];
+  const upcoming: ReminderTask[] = [];
+
+  reminderTasks.forEach((task) => {
+    const days = daysUntil(task.deadline!);
+    if (days >= 0 && days <= 1) {
+      todayTomorrow.push(task);
+    } else if (days >= 2 && days <= 7) {
+      thisWeek.push(task);
+    } else if (days > 7) {
+      upcoming.push(task);
+    } else {
+      // Overdue tasks go to "today/tomorrow" but with visual indicator
+      todayTomorrow.push(task);
+    }
+  });
+
+  // Helper to render a section
+  const renderSection = (
+    title: string,
+    tasks: ReminderTask[],
+    badgeColor: string,
+    emptyMessage: string
+  ) => {
+    if (tasks.length === 0) return null;
+    return (
+      <div className="mb-8">
+        <div className="flex items-center gap-2 mb-3">
+          <div
+            className="w-2 h-2 rounded-full"
+            style={{ background: badgeColor }}
+          />
+          <h2 className="text-sm font-bold uppercase tracking-wide text-[#8888bb]">
+            {title}
+          </h2>
+          <span className="text-xs text-[#4a4a7a]">({tasks.length})</span>
+        </div>
+        <div className="space-y-3">
+          {tasks.map((task) => {
+            const days = daysUntil(task.deadline!);
+            const isOverdue = days < 0;
+            return (
+              <Link
+                key={task.id}
+                href={`/Tasks?highlightTask=${task.id}&highlightGroup=${task.groupId}`}
+                className="block transition-all duration-200 hover:scale-[1.01]"
+              >
+                <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-4 hover:border-[rgba(74,74,232,0.4)] transition-colors">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span
+                          className="inline-block w-2 h-2 rounded-full"
+                          style={{ background: task.groupColor }}
+                        />
+                        <span className="text-xs font-medium text-[#8888bb] uppercase tracking-wide">
+                          {task.groupName}
+                        </span>
+                        {isOverdue && (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[rgba(251,113,133,0.15)] text-[#fb7185] border border-[rgba(251,113,133,0.3)]">
+                            OVERDUE
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="text-[15px] font-semibold text-[#e8e8ff] mt-1 line-clamp-1">
+                        {task.title}
+                      </h3>
+                      <div className="flex items-center gap-3 mt-2">
+                        <div className="flex items-center gap-1.5 text-xs">
+                          <span>📅</span>
+                          <span
+                            className={`font-mono ${
+                              isOverdue
+                                ? "text-[#fb7185]"
+                                : days <= 1
+                                ? "text-[#fbbf24]"
+                                : days <= 7
+                                ? "text-[#60a5fa]"
+                                : "text-[#34d399]"
+                            }`}
+                          >
+                            {formatDeadline(task.deadline!)}
+                          </span>
+                        </div>
+                        <div
+                          className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                          style={{
+                            background: `${getPriorityColor(task.priority)}20`,
+                            color: getPriorityColor(task.priority),
+                          }}
+                        >
+                          {task.priority.toUpperCase()}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="shrink-0 text-[#4a4a7a] group-hover:text-[#e8e8ff] transition-colors">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polyline points="9 18 15 12 9 6" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="flex h-screen overflow-hidden" style={{ fontFamily: "'Outfit', sans-serif" }}>
@@ -118,7 +212,6 @@ export default function Reminders() {
           pageDesc={`${reminderTasks.length} pending tasks with deadlines`}
         />
 
-        {/* Scrollable content */}
         <div className="flex-1 overflow-y-auto p-6">
           {reminderTasks.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center text-[#4a4a7a]">
@@ -135,74 +228,25 @@ export default function Reminders() {
               </Link>
             </div>
           ) : (
-            <div className="max-w-3xl mx-auto space-y-3">
-              {reminderTasks.map((task) => {
-                const days = daysUntil(task.deadline);
-                const isOverdue = days !== null && days < 0;
-                return (
-                  <Link
-                    key={task.id}
-                    href={`/Tasks?highlightTask=${task.id}&highlightGroup=${task.groupId}`}
-                    className="block transition-all duration-200 hover:scale-[1.01]"
-                  >
-                    <div
-                      className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-4 hover:border-[rgba(74,74,232,0.4)] transition-colors"
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span
-                              className="inline-block w-2 h-2 rounded-full"
-                              style={{ background: task.groupColor }}
-                            />
-                            <span className="text-xs font-medium text-[#8888bb] uppercase tracking-wide">
-                              {task.groupName}
-                            </span>
-                            {isOverdue && (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[rgba(251,113,133,0.15)] text-[#fb7185] border border-[rgba(251,113,133,0.3)]">
-                                OVERDUE
-                              </span>
-                            )}
-                          </div>
-                          <h3 className="text-[15px] font-semibold text-[#e8e8ff] mt-1 line-clamp-1">
-                            {task.title}
-                          </h3>
-                          <div className="flex items-center gap-3 mt-2">
-                            <div className="flex items-center gap-1.5 text-xs">
-                              <span>📅</span>
-                              <span
-                                className={`font-mono ${
-                                  isOverdue
-                                    ? "text-[#fb7185]"
-                                    : days !== null && days <= 2
-                                    ? "text-[#fbbf24]"
-                                    : "text-[#4a4a7a]"
-                                }`}
-                              >
-                                {formatDeadline(task.deadline!)}
-                              </span>
-                            </div>
-                            <div
-                              className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                              style={{
-                                background: `${getPriorityColor(task.priority)}20`,
-                                color: getPriorityColor(task.priority),
-                              }}
-                            >
-                              {task.priority.toUpperCase()}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="shrink-0 text-[#4a4a7a] group-hover:text-[#e8e8ff] transition-colors">
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <polyline points="9 18 15 12 9 6" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
+            <div className="max-w-3xl mx-auto">
+              {renderSection(
+                "Due Today / Tomorrow",
+                todayTomorrow,
+                "#fbbf24",
+                "No tasks due in the next 2 days"
+              )}
+              {renderSection(
+                "This Week",
+                thisWeek,
+                "#60a5fa",
+                "No tasks due this week"
+              )}
+              {renderSection(
+                "Upcoming",
+                upcoming,
+                "#34d399",
+                "No future tasks"
+              )}
             </div>
           )}
         </div>
