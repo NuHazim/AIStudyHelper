@@ -126,7 +126,7 @@ export default function AuthPage() {
       <div className="flex bg-[rgba(10,8,40,0.4)] backdrop-blur-2xl border border-[rgba(165,165,255,0.18)] rounded-2xl p-[5px] gap-1">
         <button
           onClick={() => switchTo("login")}
-          className={`text-[13px] font-semibold px-7 py-2 rounded-xl cursor-pointer transition-all duration-200 ${
+          className={`text-[13px] font-semibold px-7 py-2 rounded-xl cursor-pointer transition-all duration-200 ease-in-out ${
             showLogin
               ? "bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white shadow-[0_0_18px_rgba(108,108,245,0.35)]"
               : "bg-transparent text-[#9090c8] hover:text-[#a5a5ff]"
@@ -136,7 +136,7 @@ export default function AuthPage() {
         </button>
         <button
           onClick={() => switchTo("register")}
-          className={`text-[13px] font-semibold px-7 py-2 rounded-xl cursor-pointer transition-all duration-200 ${
+          className={`text-[13px] font-semibold px-7 py-2 rounded-xl cursor-pointer transition-all duration-200 ease-in-out ${
             !showLogin
               ? "bg-gradient-to-br from-[#7c3aed] to-[#4a4ae8] text-white shadow-[0_0_18px_rgba(108,108,245,0.35)]"
               : "bg-transparent text-[#9090c8] hover:text-[#a5a5ff]"
