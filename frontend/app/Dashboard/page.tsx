@@ -44,10 +44,10 @@ const stats: StatCard[] = [
     change: "↑ +12 this week",
     changeType: "up",
     glowColor: "#a78bfa",
-    valueColor: undefined, // gradient
+    valueColor: undefined,
   },
   {
-    icon: <span style={{ fontSize: 18 }}>🔥</span>,
+    icon: <span className="text-lg">🔥</span>,
     value: 14,
     label: "Day Streak",
     change: "Personal best!",
@@ -134,57 +134,46 @@ const quickActions = [
 // ─── Sub-components ───────────────────────────────────────────────────────────
 function StatCardItem({ card }: { card: StatCard }) {
   return (
-    <div style={{
-      background: "var(--oc-surface1)",
-      border: "1px solid var(--oc-border-subtle)",
-      borderRadius: 14,
-      padding: 18,
-      position: "relative",
-      overflow: "hidden",
-      transition: "all 0.2s",
-      cursor: "default",
-    }}
-    onMouseEnter={e => {
-      (e.currentTarget as HTMLDivElement).style.borderColor = "var(--oc-border-default)";
-      (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)";
-    }}
-    onMouseLeave={e => {
-      (e.currentTarget as HTMLDivElement).style.borderColor = "var(--oc-border-subtle)";
-      (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-    }}
-    >
-      <div style={{
-        width: 36, height: 36, borderRadius: 9,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        background: `${card.glowColor}26`,
-        marginBottom: 12,
-      }}>{card.icon}</div>
+    <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-[18px] relative overflow-hidden transition-all duration-200 cursor-default hover:border-[rgba(74,74,232,0.3)] hover:-translate-y-0.5">
+      <div
+        className="w-9 h-9 rounded-lg flex items-center justify-center mb-3"
+        style={{ background: `${card.glowColor}26` }}
+      >
+        {card.icon}
+      </div>
 
-      <div style={{
-        fontSize: 26, fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1,
-        ...(card.valueColor
-          ? { color: card.valueColor }
-          : {
-              background: "linear-gradient(135deg, #a78bfa, #6b6bf0)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }),
-      }}>{card.value}</div>
+      <div
+        className="text-[26px] font-black tracking-tighter leading-none"
+        style={
+          card.valueColor
+            ? { color: card.valueColor }
+            : {
+                background: "linear-gradient(135deg, #a78bfa, #6b6bf0)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }
+        }
+      >
+        {card.value}
+      </div>
 
-      <div style={{ fontSize: 11, color: "var(--oc-text-secondary)", fontWeight: 500, marginTop: 4, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+      <div className="text-[11px] text-[#8888bb] font-semibold mt-1 uppercase tracking-wide">
         {card.label}
       </div>
-      <div style={{
-        fontSize: 11, fontWeight: 600, marginTop: 8,
-        color: card.changeType === "up" ? "#34d399" : card.changeType === "down" ? "#fb7185" : "#fbbf24",
-      }}>{card.change}</div>
+      <div
+        className="text-[11px] font-semibold mt-2"
+        style={{
+          color: card.changeType === "up" ? "#34d399" : card.changeType === "down" ? "#fb7185" : "#fbbf24",
+        }}
+      >
+        {card.change}
+      </div>
 
-      <div style={{
-        position: "absolute", top: -30, right: -30,
-        width: 80, height: 80, borderRadius: "50%",
-        background: card.glowColor, opacity: 0.07,
-      }} />
+      <div
+        className="absolute -top-[30px] -right-[30px] w-20 h-20 rounded-full opacity-[0.07] pointer-events-none"
+        style={{ background: card.glowColor }}
+      />
     </div>
   );
 }
@@ -195,7 +184,6 @@ export default function Dashboard() {
   const chartInstance = useRef<any>(null);
 
   useEffect(() => {
-    // Dynamically import Chart.js
     import("chart.js/auto").then((ChartModule) => {
       const Chart = ChartModule.default;
       if (!chartRef.current) return;
@@ -251,199 +239,131 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <>
-      {/* CSS variables scoped to this page */}
-      <style>{`
-        :root {
-          --oc-bg: #050510;
-          --oc-surface1: #0a0a2e;
-          --oc-surface2: #0f0f3a;
-          --oc-surface3: #141448;
-          --oc-accent: #4a4ae8;
-          --oc-accent-bright: #6b6bf0;
-          --oc-border-subtle: rgba(74,74,232,0.15);
-          --oc-border-default: rgba(74,74,232,0.3);
-          --oc-text-primary: #e8e8ff;
-          --oc-text-secondary: #8888bb;
-          --oc-text-muted: #4a4a7a;
-        }
-        .oc-stat-icon-wrap { background: rgba(139,92,246,0.15); }
-        .oc-widget {
-          background: var(--oc-surface1);
-          border: 1px solid var(--oc-border-subtle);
-          border-radius: 14px;
-          padding: 18px;
-        }
-        .oc-w-title { font-size: 13px; font-weight: 700; color: var(--oc-text-primary); }
-        .oc-w-action { font-size: 11px; color: var(--oc-accent-bright); font-weight: 600; cursor: pointer; }
-        .oc-w-action:hover { color: #a78bfa; }
-        .oc-insight-card {
-          display: flex; align-items: flex-start; gap: 10px;
-          padding: 10px 12px;
-          background: var(--oc-surface2);
-          border: 1px solid var(--oc-border-subtle);
-          border-radius: 10px;
-          margin-bottom: 8px;
-          transition: all 0.15s;
-        }
-        .oc-insight-card:last-child { margin-bottom: 0; }
-        .oc-insight-card:hover { border-color: var(--oc-border-default); background: var(--oc-surface3); }
-        .oc-deadline-item {
-          display: flex; align-items: center; gap: 10px;
-          padding: 9px 11px;
-          background: var(--oc-surface2);
-          border: 1px solid var(--oc-border-subtle);
-          border-radius: 9px; margin-bottom: 7px;
-          cursor: pointer; transition: all 0.15s;
-        }
-        .oc-deadline-item:last-child { margin-bottom: 0; }
-        .oc-deadline-item:hover { border-color: var(--oc-border-default); background: var(--oc-surface3); }
-        .oc-qa-btn {
-          display: flex; flex-direction: column;
-          align-items: center; gap: 6px; padding: 14px;
-          background: var(--oc-surface2);
-          border: 1px solid var(--oc-border-subtle);
-          border-radius: 10px; cursor: pointer;
-          transition: all 0.2s; font-size: 11px;
-          font-weight: 600; color: var(--oc-text-secondary);
-        }
-        .oc-qa-btn:hover {
-          background: var(--oc-surface3);
-          border-color: var(--oc-border-default);
-          color: var(--oc-text-primary);
-          transform: translateY(-2px);
-        }
-      `}</style>
+    <div className="flex h-screen overflow-hidden font-['Outfit',sans-serif]">
+      <Sidebar />
+      <div className="flex flex-col flex-1 transition-all duration-300 ease-in-out bg-[#050510]">
+        <LIHeader pageName="Dashboard" pageDesc="Monday, 30 May 2026 · Week 12 of Semester" />
 
-      <div className="flex h-screen overflow-hidden" style={{ fontFamily: "'Outfit', sans-serif" }}>
-        <Sidebar />
-        <div className="flex flex-col flex-1 transition-all duration-300 ease-in-out" style={{ background: "#050510" }}>
-          <LIHeader pageName="Dashboard" pageDesc="Monday, 30 May 2026 · Week 12 of Semester" />
+        <div className="flex-1 overflow-y-auto p-6 text-[#e8e8ff] relative">
+          {/* Background glow */}
+          <div className="fixed top-[-200px] left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full bg-[radial-gradient(ellipse,rgba(74,74,232,0.12)_0%,transparent_70%)] pointer-events-none z-0" />
 
-          {/* ── Scrollable Content ── */}
-          <div className="flex-1 overflow-y-auto p-6" style={{ color: "#e8e8ff", position: "relative" }}>
-
-            {/* Background glow */}
-            <div style={{
-              position: "fixed", top: -200, left: "50%", transform: "translateX(-50%)",
-              width: 800, height: 500, borderRadius: "50%",
-              background: "radial-gradient(ellipse, rgba(74,74,232,0.12) 0%, transparent 70%)",
-              pointerEvents: "none", zIndex: 0,
-            }} />
-
-            <div style={{ position: "relative", zIndex: 1 }}>
-
-              {/* ── Header ── */}
-              <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 24 }}>
-                <div>
-                  <div style={{
-                    fontSize: 24, fontWeight: 800, letterSpacing: "-0.02em",
-                    background: "linear-gradient(135deg, #e8e8ff 0%, #a78bfa 100%)",
-                    WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-                  }}>Good evening, Nufail 👋</div>
-                  <div style={{ fontSize: 12, color: "#4a4a7a", marginTop: 4, fontFamily: "monospace" }}>
-                    Saturday, 30 May 2026 · Week 12 of Semester
-                  </div>
+          <div className="relative z-10">
+            {/* Header */}
+            <div className="flex items-end justify-between mb-6">
+              <div>
+                <div className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-[#e8e8ff] to-[#a78bfa] bg-clip-text text-transparent">
+                  Good evening, Nufail 👋
                 </div>
-                {/* Ask AI button removed */}
-              </div>
-
-              {/* ── Stat Cards ── */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 18 }}>
-                {stats.map((card, i) => <StatCardItem key={i} card={card} />)}
-              </div>
-
-              {/* ── Middle Row (only chart now) ── */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 16, marginBottom: 16 }}>
-                {/* Chart - full width */}
-                <div className="oc-widget">
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-                    <span className="oc-w-title">Weekly Focus Activity</span>
-                    <span style={{
-                      fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 6,
-                      background: "rgba(74,74,232,0.18)", color: "#6b6bf0", fontFamily: "monospace",
-                    }}>This week</span>
-                  </div>
-                  <div style={{ height: 120, position: "relative" }}>
-                    <canvas ref={chartRef} />
-                  </div>
+                <div className="text-xs text-[#4a4a7a] mt-1 font-mono">
+                  Saturday, 30 May 2026 · Week 12 of Semester
                 </div>
               </div>
+            </div>
 
-              {/* ── Bottom Row (AI Insights, Deadlines, Quick Actions) ── */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
+            {/* Stat Cards */}
+            <div className="grid grid-cols-4 gap-3.5 mb-4">
+              {stats.map((card, i) => <StatCardItem key={i} card={card} />)}
+            </div>
 
-                {/* AI Insights */}
-                <div className="oc-widget">
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-                    <span className="oc-w-title">✦ AI Insights</span>
-                    <span className="oc-w-action">Chat →</span>
-                  </div>
-                  {insights.map((ins, i) => (
-                    <div key={i} className="oc-insight-card">
-                      <div style={{
-                        width: 30, height: 30, borderRadius: 8, background: ins.bgColor,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        fontSize: 13, flexShrink: 0,
-                      }}>{ins.icon}</div>
-                      <div>
-                        <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 2, color: ins.titleColor }}>{ins.title}</div>
-                        <div style={{ fontSize: 11, color: "#8888bb", lineHeight: 1.45 }}>{ins.desc}</div>
-                      </div>
+            {/* Middle Row - Chart only */}
+            <div className="grid grid-cols-1 gap-4 mb-4">
+              <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-[18px]">
+                <div className="flex items-center justify-between mb-3.5">
+                  <span className="text-[13px] font-bold text-[#e8e8ff]">Weekly Focus Activity</span>
+                  <span className="text-[10px] font-bold py-0.5 px-2 rounded-md bg-[rgba(74,74,232,0.18)] text-[#6b6bf0] font-mono">
+                    This week
+                  </span>
+                </div>
+                <div className="h-[120px] relative">
+                  <canvas ref={chartRef} />
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Row */}
+            <div className="grid grid-cols-3 gap-4">
+              {/* AI Insights */}
+              <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-[18px]">
+                <div className="flex items-center justify-between mb-3.5">
+                  <span className="text-[13px] font-bold text-[#e8e8ff]">✦ AI Insights</span>
+                  <span className="text-[11px] text-[#6b6bf0] font-semibold cursor-pointer hover:text-[#a78bfa]">Chat →</span>
+                </div>
+                {insights.map((ins, i) => (
+                  <div
+                    key={i}
+                    className="flex items-start gap-2.5 p-2.5 bg-[#0f0f3a] border border-[rgba(74,74,232,0.15)] rounded-lg mb-2 last:mb-0 transition-all duration-150 hover:border-[rgba(74,74,232,0.3)] hover:bg-[#141448]"
+                  >
+                    <div
+                      className="w-[30px] h-[30px] rounded-lg flex items-center justify-center text-[13px] shrink-0"
+                      style={{ background: ins.bgColor }}
+                    >
+                      {ins.icon}
                     </div>
+                    <div>
+                      <div className="text-xs font-bold mb-0.5" style={{ color: ins.titleColor }}>
+                        {ins.title}
+                      </div>
+                      <div className="text-[11px] text-[#8888bb] leading-relaxed">{ins.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Upcoming Deadlines */}
+              <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-[18px]">
+                <div className="flex items-center justify-between mb-3.5">
+                  <span className="text-[13px] font-bold text-[#e8e8ff]">Upcoming Deadlines</span>
+                  <span className="text-[11px] text-[#6b6bf0] font-semibold cursor-pointer hover:text-[#a78bfa]">All →</span>
+                </div>
+                {deadlines.map((dl, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-2.5 p-[9px_11px] bg-[#0f0f3a] border border-[rgba(74,74,232,0.15)] rounded-lg mb-2 last:mb-0 cursor-pointer transition-all duration-150 hover:border-[rgba(74,74,232,0.3)] hover:bg-[#141448]"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: dl.dotColor }} />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-semibold truncate">{dl.name}</div>
+                      <div className="text-[10px] text-[#4a4a7a] mt-0.5">{dl.group}</div>
+                    </div>
+                    <div className="text-[10px] font-bold font-mono whitespace-nowrap" style={{ color: dl.dateColor }}>
+                      {dl.date}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Quick Actions + Streak */}
+              <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-[18px]">
+                <div className="flex items-center justify-between mb-3.5">
+                  <span className="text-[13px] font-bold text-[#e8e8ff]">Quick Actions</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 mb-3.5">
+                  {quickActions.map((qa, i) => (
+                    <button
+                      key={i}
+                      className="flex flex-col items-center gap-1.5 p-3.5 bg-[#0f0f3a] border border-[rgba(74,74,232,0.15)] rounded-lg text-[11px] font-semibold text-[#8888bb] cursor-pointer transition-all duration-200 hover:bg-[#141448] hover:border-[rgba(74,74,232,0.3)] hover:text-[#e8e8ff] hover:-translate-y-0.5"
+                    >
+                      <span className="text-xl">{qa.icon}</span>
+                      {qa.label}
+                    </button>
                   ))}
                 </div>
-
-                {/* Upcoming Deadlines */}
-                <div className="oc-widget">
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-                    <span className="oc-w-title">Upcoming Deadlines</span>
-                    <span className="oc-w-action">All →</span>
-                  </div>
-                  {deadlines.map((dl, i) => (
-                    <div key={i} className="oc-deadline-item">
-                      <div style={{ width: 7, height: 7, borderRadius: "50%", background: dl.dotColor, flexShrink: 0 }} />
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontSize: 12, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{dl.name}</div>
-                        <div style={{ fontSize: 10, color: "#4a4a7a", marginTop: 2 }}>{dl.group}</div>
-                      </div>
-                      <div style={{ fontSize: 10, fontWeight: 700, fontFamily: "monospace", whiteSpace: "nowrap", color: dl.dateColor }}>{dl.date}</div>
-                    </div>
+                <div className="h-px bg-[rgba(74,74,232,0.15)] my-3" />
+                <div className="text-[10px] font-bold text-[#4a4a7a] uppercase tracking-wider mb-2">
+                  Focus Streak
+                </div>
+                <div className="flex gap-1">
+                  {Array.from({ length: 14 }, (_, i) => (
+                    <div key={i} className="flex-1 h-6 rounded-md bg-[rgba(251,191,36,0.7)]" />
                   ))}
                 </div>
-
-                {/* Quick Actions + Streak */}
-                <div className="oc-widget">
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-                    <span className="oc-w-title">Quick Actions</span>
-                  </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8, marginBottom: 14 }}>
-                    {quickActions.map((qa, i) => (
-                      <button key={i} className="oc-qa-btn">
-                        <span style={{ fontSize: 20 }}>{qa.icon}</span>
-                        {qa.label}
-                      </button>
-                    ))}
-                  </div>
-                  <div style={{ height: 1, background: "rgba(74,74,232,0.15)", margin: "12px 0" }} />
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "#4a4a7a", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>
-                    Focus Streak
-                  </div>
-                  <div style={{ display: "flex", gap: 4 }}>
-                    {Array.from({ length: 14 }, (_, i) => (
-                      <div key={i} style={{ flex: 1, height: 24, borderRadius: 4, background: "rgba(251,191,36,0.7)" }} />
-                    ))}
-                  </div>
-                  <div style={{ fontSize: 11, color: "#4a4a7a", marginTop: 6, textAlign: "right", fontFamily: "monospace" }}>
-                    🔥 14 days
-                  </div>
-                </div>
-
+                <div className="text-[11px] text-[#4a4a7a] mt-1.5 text-right font-mono">🔥 14 days</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
