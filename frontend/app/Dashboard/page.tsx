@@ -31,14 +31,6 @@ interface Deadline {
   dateColor: string;
 }
 
-interface Mission {
-  icon: string;
-  name: string;
-  progress: number;
-  barColor: string;
-  xp: number;
-}
-
 // ─── Dummy Data ───────────────────────────────────────────────────────────────
 const stats: StatCard[] = [
   {
@@ -130,12 +122,6 @@ const deadlines: Deadline[] = [
   { name: "Algorithm Report", group: "University · WIA2005", date: "Jun 5", dotColor: "#fbbf24", dateColor: "#fbbf24" },
   { name: "FridgeBuddy Demo", group: "University · Mobile", date: "Jun 12", dotColor: "#34d399", dateColor: "#34d399" },
   { name: "UMHackathon Report", group: "Extracurricular", date: "Jun 15", dotColor: "#34d399", dateColor: "#34d399" },
-];
-
-const missions: Mission[] = [
-  { icon: "📚", name: "Study 5 hrs", progress: 76, barColor: "#a78bfa", xp: 150 },
-  { icon: "✅", name: "Complete 10 tasks", progress: 60, barColor: "#34d399", xp: 100 },
-  { icon: "🎯", name: "7-day streak", progress: 100, barColor: "#fbbf24", xp: 200 },
 ];
 
 const quickActions = [
@@ -359,17 +345,7 @@ export default function Dashboard() {
                     Saturday, 30 May 2026 · Week 12 of Semester
                   </div>
                 </div>
-                <button style={{
-                  display: "flex", alignItems: "center", gap: 6,
-                  padding: "9px 16px", background: "#4a4ae8",
-                  border: "none", borderRadius: 10, color: "#fff",
-                  fontSize: 13, fontWeight: 700, cursor: "pointer",
-                }}>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                  </svg>
-                  Ask AI
-                </button>
+                {/* Ask AI button removed */}
               </div>
 
               {/* ── Stat Cards ── */}
@@ -377,11 +353,10 @@ export default function Dashboard() {
                 {stats.map((card, i) => <StatCardItem key={i} card={card} />)}
               </div>
 
-              {/* ── Middle Row ── */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 16 }}>
-
-                {/* Chart */}
-                <div className="oc-widget" style={{ gridColumn: "span 2" }}>
+              {/* ── Middle Row (only chart now) ── */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 16, marginBottom: 16 }}>
+                {/* Chart - full width */}
+                <div className="oc-widget">
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
                     <span className="oc-w-title">Weekly Focus Activity</span>
                     <span style={{
@@ -393,48 +368,9 @@ export default function Dashboard() {
                     <canvas ref={chartRef} />
                   </div>
                 </div>
-                    
-                {/* XP + Missions */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {/* XP Bar */}
-                  <div className="oc-widget" style={{ padding: 16 }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: "#6b6bf0", fontFamily: "monospace" }}>⚡ Level 12</span>
-                      <span style={{ fontSize: 11, color: "#4a4a7a", fontFamily: "monospace" }}>2,840 / 4,200 XP</span>
-                    </div>
-                    <div style={{ height: 6, background: "#141448", borderRadius: 3, overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: "68%", background: "linear-gradient(90deg,#4a4ae8,#6b6bf0)", borderRadius: 3 }} />
-                    </div>
-                    <div style={{ fontSize: 10, color: "#4a4a7a", marginTop: 6, fontFamily: "monospace" }}>1,360 XP until Level 13</div>
-                  </div>
-
-                  {/* Missions */}
-                  <div className="oc-widget" style={{ padding: 16, flex: 1 }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-                      <span className="oc-w-title">Weekly Missions</span>
-                      <span className="oc-w-action">All →</span>
-                    </div>
-                    {missions.map((m, i) => (
-                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: i < missions.length - 1 ? 10 : 0 }}>
-                        <div style={{
-                          width: 28, height: 28, borderRadius: 7, background: "#141448",
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                          fontSize: 13, flexShrink: 0,
-                        }}>{m.icon}</div>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ fontSize: 12, fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{m.name}</div>
-                          <div style={{ height: 4, background: "#141448", borderRadius: 2, marginTop: 5, overflow: "hidden" }}>
-                            <div style={{ height: "100%", width: `${m.progress}%`, background: m.barColor, borderRadius: 2 }} />
-                          </div>
-                        </div>
-                        <span style={{ fontSize: 10, fontWeight: 700, color: "#6b6bf0", fontFamily: "monospace", whiteSpace: "nowrap" }}>+{m.xp}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
 
-              {/* ── Bottom Row ── */}
+              {/* ── Bottom Row (AI Insights, Deadlines, Quick Actions) ── */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
 
                 {/* AI Insights */}
