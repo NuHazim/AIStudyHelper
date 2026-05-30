@@ -393,7 +393,7 @@ export default function Dashboard() {
                     <canvas ref={chartRef} />
                   </div>
                 </div>
-
+                    
                 {/* XP + Missions */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {/* XP Bar */}
