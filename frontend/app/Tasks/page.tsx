@@ -93,11 +93,12 @@ function PriorityBadge({ priority }: { priority: "high" | "medium" | "low" }) {
   };
   const s = map[priority];
   return (
-    <span style={{
-      fontSize: 9, fontWeight: 700, padding: "2px 6px", borderRadius: 20,
-      letterSpacing: "0.04em", textTransform: "uppercase",
-      background: s.bg, color: s.color,
-    }}>{s.label}</span>
+    <span
+      className="text-[9px] font-bold py-0.5 px-1.5 rounded-full uppercase tracking-wide"
+      style={{ background: s.bg, color: s.color }}
+    >
+      {s.label}
+    </span>
   );
 }
 
@@ -114,52 +115,40 @@ function TaskItem({
   const uc = urgencyClass(days);
 
   return (
-    <div style={{
-      display: "flex", alignItems: "center", gap: 9,
-      padding: "9px 9px", borderRadius: 8,
-      border: "1px solid transparent",
-      transition: "all 0.15s", cursor: "pointer",
-    }}
-    onMouseEnter={e => {
-      const el = e.currentTarget as HTMLDivElement;
-      el.style.background = "#0f0f3a";
-      el.style.borderColor = "rgba(74,74,232,0.15)";
-    }}
-    onMouseLeave={e => {
-      const el = e.currentTarget as HTMLDivElement;
-      el.style.background = "transparent";
-      el.style.borderColor = "transparent";
-    }}
-    className="task-row"
-    >
+    <div className="flex items-center gap-2 py-2 px-2 rounded-lg border border-transparent transition-all duration-150 cursor-pointer hover:bg-[#0f0f3a] hover:border-[rgba(74,74,232,0.15)] task-row">
       {/* Checkbox */}
       <div
         onClick={() => onToggle(task.id, groupId)}
+        className="w-4 h-4 rounded-md flex-shrink-0 flex items-center justify-center transition-all duration-150 cursor-pointer text-[9px] text-white"
         style={{
-          width: 17, height: 17, borderRadius: 5, flexShrink: 0,
           border: task.done ? "2px solid #34d399" : "2px solid rgba(74,74,232,0.3)",
           background: task.done ? "#34d399" : "transparent",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          transition: "all 0.15s", cursor: "pointer", fontSize: 9, color: "#fff",
         }}
-      >{task.done ? "✓" : ""}</div>
+      >
+        {task.done ? "✓" : ""}
+      </div>
 
       {/* Info */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{
-          fontSize: 12, fontWeight: 500,
-          overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-          color: task.done ? "#4a4a7a" : "#e8e8ff",
-          textDecoration: task.done ? "line-through" : "none",
-          transition: "all 0.15s",
-        }}>{task.title}</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 7, marginTop: 3 }}>
+      <div className="flex-1 min-w-0">
+        <div
+          className="text-xs font-medium truncate transition-all duration-150"
+          style={{
+            color: task.done ? "#4a4a7a" : "#e8e8ff",
+            textDecoration: task.done ? "line-through" : "none",
+          }}
+        >
+          {task.title}
+        </div>
+        <div className="flex items-center gap-1.5 mt-1">
           {task.deadline && (
-            <span style={{
-              fontSize: 10, fontFamily: "monospace",
-              color: uc === "urg" ? "#fb7185" : uc === "soon" ? "#fbbf24" : "#4a4a7a",
-              display: "flex", alignItems: "center", gap: 3,
-            }}>📅 {dlLabel}</span>
+            <span
+              className="text-[10px] font-mono flex items-center gap-1"
+              style={{
+                color: uc === "urg" ? "#fb7185" : uc === "soon" ? "#fbbf24" : "#4a4a7a",
+              }}
+            >
+              📅 {dlLabel}
+            </span>
           )}
           <PriorityBadge priority={task.priority} />
         </div>
@@ -168,11 +157,10 @@ function TaskItem({
       {/* Delete */}
       <span
         onClick={() => onDelete(task.id, groupId)}
-        className="task-del-btn"
-        style={{ fontSize: 11, color: "#4a4a7a", cursor: "pointer", padding: 4, transition: "color 0.15s" }}
-        onMouseEnter={e => (e.currentTarget as HTMLSpanElement).style.color = "#fb7185"}
-        onMouseLeave={e => (e.currentTarget as HTMLSpanElement).style.color = "#4a4a7a"}
-      >✕</span>
+        className="task-del-btn text-[11px] text-[#4a4a7a] cursor-pointer p-1 transition-colors duration-150 hover:text-[#fb7185]"
+      >
+        ✕
+      </span>
     </div>
   );
 }
@@ -191,41 +179,45 @@ function GroupCard({
   const pct = total ? Math.round((done / total) * 100) : 0;
 
   return (
-    <div style={{
-      background: "#0a0a2e", border: "1px solid rgba(74,74,232,0.15)",
-      borderRadius: 14, overflow: "hidden", transition: "border-color 0.2s",
-    }}
-    onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(74,74,232,0.3)"}
-    onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(74,74,232,0.15)"}
-    >
+    <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl overflow-hidden transition-colors duration-200 hover:border-[rgba(74,74,232,0.3)]">
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 14px 12px", borderBottom: "1px solid rgba(74,74,232,0.15)" }}>
-        <div style={{
-          width: 34, height: 34, borderRadius: 8, background: group.color,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 15, flexShrink: 0,
-        }}>{group.emoji}</div>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "#e8e8ff" }}>{group.name}</div>
-          <div style={{ fontSize: 10, color: "#4a4a7a", marginTop: 2, fontFamily: "monospace" }}>{done}/{total} completed · {pct}%</div>
+      <div className="flex items-center gap-3 p-3.5 border-b border-[rgba(74,74,232,0.15)]">
+        <div
+          className="w-9 h-9 rounded-lg flex items-center justify-center text-base shrink-0"
+          style={{ background: group.color }}
+        >
+          {group.emoji}
         </div>
-        <div style={{ display: "flex", gap: 4 }}>
+        <div className="flex-1 min-w-0">
+          <div className="text-[13px] font-bold truncate text-[#e8e8ff]">{group.name}</div>
+          <div className="text-[10px] text-[#4a4a7a] mt-0.5 font-mono">
+            {done}/{total} completed · {pct}%
+          </div>
+        </div>
+        <div className="flex gap-1">
           <IconBtn onClick={() => onAddTask(group.id)} title="Add task">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
           </IconBtn>
           <IconBtn onClick={() => onDeleteGroup(group.id)} title="Delete group">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6l-1 14H6L5 6"/>
+              <path d="M10 11v6M14 11v6"/>
+            </svg>
           </IconBtn>
         </div>
       </div>
 
       {/* Progress bar */}
-      <div style={{ height: 2, background: "#141448", overflow: "hidden" }}>
-        <div style={{ height: "100%", width: `${pct}%`, background: group.color, transition: "width 0.6s" }} />
+      <div className="h-0.5 bg-[#141448] overflow-hidden">
+        <div className="h-full transition-all duration-600" style={{ width: `${pct}%`, background: group.color }} />
       </div>
 
       {/* Tasks */}
-      <div style={{ padding: 8, display: "flex", flexDirection: "column", gap: 4 }}>
+      <div className="p-2 flex flex-col gap-1">
         {group.tasks.map(t => (
           <TaskItem key={t.id} task={t} groupId={group.id} onToggle={onToggle} onDelete={onDeleteTask} />
         ))}
@@ -234,26 +226,12 @@ function GroupCard({
       {/* Add task btn */}
       <div
         onClick={() => onAddTask(group.id)}
-        style={{
-          display: "flex", alignItems: "center", gap: 8,
-          padding: "9px 10px", color: "#4a4a7a", fontSize: 12, cursor: "pointer",
-          borderRadius: 8, border: "1px dashed rgba(74,74,232,0.15)",
-          margin: "4px 8px 8px", transition: "all 0.15s", fontFamily: "'Outfit',sans-serif",
-        }}
-        onMouseEnter={e => {
-          const el = e.currentTarget as HTMLDivElement;
-          el.style.color = "#a78bfa";
-          el.style.borderColor = "rgba(167,139,250,0.35)";
-          el.style.background = "rgba(167,139,250,0.05)";
-        }}
-        onMouseLeave={e => {
-          const el = e.currentTarget as HTMLDivElement;
-          el.style.color = "#4a4a7a";
-          el.style.borderColor = "rgba(74,74,232,0.15)";
-          el.style.background = "transparent";
-        }}
+        className="flex items-center gap-2 py-2 px-2.5 text-[12px] text-[#4a4a7a] cursor-pointer rounded-lg border border-dashed border-[rgba(74,74,232,0.15)] mx-2 mb-2 transition-all duration-150 hover:text-[#a78bfa] hover:border-[rgba(167,139,250,0.35)] hover:bg-[rgba(167,139,250,0.05)]"
       >
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
         Add task
       </div>
     </div>
@@ -263,26 +241,12 @@ function GroupCard({
 function IconBtn({ onClick, title, children }: { onClick: () => void; title?: string; children: React.ReactNode }) {
   return (
     <button
-      onClick={onClick} title={title}
-      style={{
-        width: 26, height: 26, borderRadius: 6, background: "transparent",
-        border: "1px solid transparent", color: "#4a4a7a",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        cursor: "pointer", transition: "all 0.15s",
-      }}
-      onMouseEnter={e => {
-        const el = e.currentTarget as HTMLButtonElement;
-        el.style.background = "#0f0f3a";
-        el.style.borderColor = "rgba(74,74,232,0.15)";
-        el.style.color = "#e8e8ff";
-      }}
-      onMouseLeave={e => {
-        const el = e.currentTarget as HTMLButtonElement;
-        el.style.background = "transparent";
-        el.style.borderColor = "transparent";
-        el.style.color = "#4a4a7a";
-      }}
-    >{children}</button>
+      onClick={onClick}
+      title={title}
+      className="w-6 h-6 rounded-md bg-transparent border border-transparent text-[#4a4a7a] flex items-center justify-center cursor-pointer transition-all duration-150 hover:bg-[#0f0f3a] hover:border-[rgba(74,74,232,0.15)] hover:text-[#e8e8ff]"
+    >
+      {children}
+    </button>
   );
 }
 
@@ -290,16 +254,10 @@ function IconBtn({ onClick, title, children }: { onClick: () => void; title?: st
 function Modal({ children, onClose }: { children: React.ReactNode; onClose: () => void }) {
   return (
     <div
-      style={{
-        position: "fixed", inset: 0, background: "rgba(5,5,16,0.85)",
-        display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100,
-      }}
+      className="fixed inset-0 bg-[rgba(5,5,16,0.85)] flex items-center justify-center z-[100]"
       onClick={e => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div style={{
-        background: "#0a0a2e", border: "1px solid rgba(74,74,232,0.3)",
-        borderRadius: 16, width: 440, overflow: "hidden",
-      }}>
+      <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.3)] rounded-2xl w-[440px] overflow-hidden">
         {children}
       </div>
     </div>
@@ -308,9 +266,14 @@ function Modal({ children, onClose }: { children: React.ReactNode; onClose: () =
 
 function ModalHeader({ title, onClose }: { title: string; onClose: () => void }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", borderBottom: "1px solid rgba(74,74,232,0.15)" }}>
-      <div style={{ fontSize: 15, fontWeight: 800, color: "#e8e8ff" }}>{title}</div>
-      <button onClick={onClose} style={{ background: "none", border: "none", color: "#4a4a7a", cursor: "pointer", fontSize: 16, padding: "2px 6px", borderRadius: 5 }}>✕</button>
+    <div className="flex items-center justify-between p-4 border-b border-[rgba(74,74,232,0.15)]">
+      <div className="text-[15px] font-extrabold text-[#e8e8ff]">{title}</div>
+      <button
+        onClick={onClose}
+        className="bg-transparent border-none text-[#4a4a7a] cursor-pointer text-lg px-2 py-1 rounded-md transition-colors duration-150 hover:text-[#e8e8ff]"
+      >
+        ✕
+      </button>
     </div>
   );
 }
@@ -319,9 +282,23 @@ function ModalFooter({ onCancel, onConfirm, confirmLabel, danger }: {
   onCancel: () => void; onConfirm: () => void; confirmLabel: string; danger?: boolean;
 }) {
   return (
-    <div style={{ padding: "14px 20px", borderTop: "1px solid rgba(74,74,232,0.15)", display: "flex", justifyContent: "flex-end", gap: 10 }}>
-      <button onClick={onCancel} style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 9, background: "#0f0f3a", color: "#8888bb", border: "1px solid rgba(74,74,232,0.15)", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>Cancel</button>
-      <button onClick={onConfirm} style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 9, fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit',sans-serif", ...(danger ? { background: "rgba(251,113,133,0.15)", color: "#fb7185", border: "1px solid rgba(251,113,133,0.3)" } : { background: "#4a4ae8", color: "#fff", border: "none" }) }}>{confirmLabel}</button>
+    <div className="p-3.5 border-t border-[rgba(74,74,232,0.15)] flex justify-end gap-2.5">
+      <button
+        onClick={onCancel}
+        className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#0f0f3a] text-[#8888bb] border border-[rgba(74,74,232,0.15)] text-xs font-bold cursor-pointer"
+      >
+        Cancel
+      </button>
+      <button
+        onClick={onConfirm}
+        className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold cursor-pointer transition-colors ${
+          danger
+            ? "bg-[rgba(251,113,133,0.15)] text-[#fb7185] border border-[rgba(251,113,133,0.3)]"
+            : "bg-[#4a4ae8] text-white border-none"
+        }`}
+      >
+        {confirmLabel}
+      </button>
     </div>
   );
 }
@@ -329,20 +306,17 @@ function ModalFooter({ onCancel, onConfirm, confirmLabel, danger }: {
 function OcInput({ id, placeholder, type = "text", min }: { id: string; placeholder?: string; type?: string; min?: string }) {
   return (
     <input
-      id={id} type={type} placeholder={placeholder} min={min}
-      style={{
-        width: "100%", background: "#0f0f3a", border: "1px solid rgba(74,74,232,0.15)",
-        borderRadius: 9, padding: "9px 12px", color: "#e8e8ff",
-        fontFamily: "'Outfit',sans-serif", fontSize: 13, outline: "none",
-      }}
-      onFocus={e => (e.currentTarget.style.borderColor = "#4a4ae8")}
-      onBlur={e => (e.currentTarget.style.borderColor = "rgba(74,74,232,0.15)")}
+      id={id}
+      type={type}
+      placeholder={placeholder}
+      min={min}
+      className="w-full bg-[#0f0f3a] border border-[rgba(74,74,232,0.15)] rounded-lg px-3 py-2.5 text-[#e8e8ff] text-sm outline-none transition-colors duration-150 focus:border-[#4a4ae8]"
     />
   );
 }
 
 function InputLabel({ children }: { children: React.ReactNode }) {
-  return <div style={{ fontSize: 11, fontWeight: 700, color: "#8888bb", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>{children}</div>;
+  return <div className="text-[11px] font-bold text-[#8888bb] uppercase tracking-wide mb-1.5">{children}</div>;
 }
 
 // ─── Add Group Modal ──────────────────────────────────────────────────────────
@@ -362,31 +336,42 @@ function AddGroupModal({ onClose, onCreate }: {
   return (
     <Modal onClose={onClose}>
       <ModalHeader title="Create New Group" onClose={onClose} />
-      <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 14 }}>
-        <div><InputLabel>Group Name</InputLabel><OcInput id="ng-name" placeholder="e.g. Web Development, OS Assignment..." /></div>
+      <div className="p-5 flex flex-col gap-3.5">
+        <div>
+          <InputLabel>Group Name</InputLabel>
+          <OcInput id="ng-name" placeholder="e.g. Web Development, OS Assignment..." />
+        </div>
         <div>
           <InputLabel>Icon</InputLabel>
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+          <div className="flex gap-1.5 flex-wrap">
             {EMOJIS.map(e => (
-              <div key={e} onClick={() => setSelEmoji(e)} style={{
-                width: 34, height: 34, borderRadius: 7, cursor: "pointer", fontSize: 16,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                background: selEmoji === e ? "rgba(74,74,232,0.15)" : "#0f0f3a",
-                border: selEmoji === e ? "1px solid #4a4ae8" : "1px solid rgba(74,74,232,0.15)",
-                transition: "all 0.15s",
-              }}>{e}</div>
+              <div
+                key={e}
+                onClick={() => setSelEmoji(e)}
+                className="w-8 h-8 rounded-md cursor-pointer text-lg flex items-center justify-center transition-all duration-150"
+                style={{
+                  background: selEmoji === e ? "rgba(74,74,232,0.15)" : "#0f0f3a",
+                  border: selEmoji === e ? "1px solid #4a4ae8" : "1px solid rgba(74,74,232,0.15)",
+                }}
+              >
+                {e}
+              </div>
             ))}
           </div>
         </div>
         <div>
           <InputLabel>Color</InputLabel>
-          <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
+          <div className="flex gap-1.5 flex-wrap">
             {COLORS.map(c => (
-              <div key={c} onClick={() => setSelColor(c)} style={{
-                width: 26, height: 26, borderRadius: 6, background: c, cursor: "pointer",
-                boxShadow: selColor === c ? "0 0 0 3px rgba(255,255,255,0.25)" : "none",
-                transition: "all 0.15s",
-              }} />
+              <div
+                key={c}
+                onClick={() => setSelColor(c)}
+                className="w-6 h-6 rounded-md cursor-pointer transition-all duration-150"
+                style={{
+                  background: c,
+                  boxShadow: selColor === c ? "0 0 0 3px rgba(255,255,255,0.25)" : "none",
+                }}
+              />
             ))}
           </div>
         </div>
@@ -413,20 +398,29 @@ function AddTaskModal({ groupName, onClose, onCreate }: {
   return (
     <Modal onClose={onClose}>
       <ModalHeader title={`Add Task — ${groupName}`} onClose={onClose} />
-      <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 14 }}>
-        <div><InputLabel>Task name</InputLabel><OcInput id="nt-name" placeholder="What needs to be done?" /></div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-          <div><InputLabel>Deadline (optional)</InputLabel><OcInput id="nt-dl" type="date" min="2026-05-30" /></div>
+      <div className="p-5 flex flex-col gap-3.5">
+        <div>
+          <InputLabel>Task name</InputLabel>
+          <OcInput id="nt-name" placeholder="What needs to be done?" />
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <InputLabel>Deadline (optional)</InputLabel>
+            <OcInput id="nt-dl" type="date" min="2026-05-30" />
+          </div>
           <div>
             <InputLabel>Priority</InputLabel>
-            <select id="nt-pri" style={{ width: "100%", background: "#0f0f3a", border: "1px solid rgba(74,74,232,0.15)", borderRadius: 9, padding: "9px 12px", color: "#e8e8ff", fontFamily: "'Outfit',sans-serif", fontSize: 13, outline: "none" }}>
+            <select
+              id="nt-pri"
+              className="w-full bg-[#0f0f3a] border border-[rgba(74,74,232,0.15)] rounded-lg px-3 py-2.5 text-[#e8e8ff] text-sm outline-none"
+            >
               <option value="high">High</option>
               <option value="medium" defaultValue="medium">Medium</option>
               <option value="low">Low</option>
             </select>
           </div>
         </div>
-        <div style={{ fontSize: 11, color: "#8888bb", padding: "9px 12px", background: "rgba(74,74,232,0.06)", border: "1px solid rgba(74,74,232,0.15)", borderRadius: 8, lineHeight: 1.5 }}>
+        <div className="text-[11px] text-[#8888bb] p-2.5 bg-[rgba(74,74,232,0.06)] border border-[rgba(74,74,232,0.15)] rounded-lg leading-relaxed">
           💡 Tasks without a deadline won&apos;t appear in Reminders — they stay only in this group.
         </div>
       </div>
@@ -442,13 +436,23 @@ function ConfirmModal({ icon, title, desc, onCancel, onConfirm, confirmLabel }: 
 }) {
   return (
     <Modal onClose={onCancel}>
-      <div style={{ textAlign: "center", padding: "28px 24px" }}>
-        <div style={{ fontSize: 32, marginBottom: 12 }}>{icon}</div>
-        <div style={{ fontSize: 16, fontWeight: 800, marginBottom: 6, color: "#e8e8ff" }}>{title}</div>
-        <div style={{ fontSize: 13, color: "#8888bb", lineHeight: 1.5 }} dangerouslySetInnerHTML={{ __html: desc }} />
-        <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 20 }}>
-          <button onClick={onCancel} style={{ padding: "8px 16px", borderRadius: 9, background: "#0f0f3a", color: "#8888bb", border: "1px solid rgba(74,74,232,0.15)", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>Cancel</button>
-          <button onClick={onConfirm} style={{ padding: "8px 16px", borderRadius: 9, background: "rgba(251,113,133,0.15)", color: "#fb7185", border: "1px solid rgba(251,113,133,0.3)", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit',sans-serif" }}>{confirmLabel}</button>
+      <div className="text-center p-7">
+        <div className="text-3xl mb-3">{icon}</div>
+        <div className="text-base font-extrabold mb-1.5 text-[#e8e8ff]">{title}</div>
+        <div className="text-[13px] text-[#8888bb] leading-relaxed" dangerouslySetInnerHTML={{ __html: desc }} />
+        <div className="flex justify-center gap-2.5 mt-5">
+          <button
+            onClick={onCancel}
+            className="px-4 py-2 rounded-lg bg-[#0f0f3a] text-[#8888bb] border border-[rgba(74,74,232,0.15)] text-xs font-bold cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            className="px-4 py-2 rounded-lg bg-[rgba(251,113,133,0.15)] text-[#fb7185] border border-[rgba(251,113,133,0.3)] text-xs font-bold cursor-pointer"
+          >
+            {confirmLabel}
+          </button>
         </div>
       </div>
     </Modal>
@@ -503,52 +507,47 @@ export default function Tasks() {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap');
-        .task-row { position: relative; }
         .task-del-btn { opacity: 0; transition: opacity 0.15s; }
         .task-row:hover .task-del-btn { opacity: 1; }
       `}</style>
 
       <div className="flex h-screen overflow-hidden" style={{ fontFamily: "'Outfit', sans-serif" }}>
         <Sidebar />
-        <div className="flex flex-col flex-1 transition-all duration-300 ease-in-out" style={{ background: "#050510" }}>
+        <div className="flex flex-col flex-1 transition-all duration-300 ease-in-out bg-[#050510]">
           <LIHeader pageName="Tasks" pageDesc={`${groups.length} groups · ${doneCount}/${allTasks.length} tasks completed`} />
 
           {/* ── Scrollable content ── */}
-          <div className="flex-1 overflow-y-auto p-6" style={{ color: "#e8e8ff" }}>
-
+          <div className="flex-1 overflow-y-auto p-6 text-[#e8e8ff]">
             {/* Header */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+            <div className="flex items-center justify-between mb-6">
               <div>
-                <h1 style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-0.025em" }}>Task Groups</h1>
-                <p style={{ fontSize: 12, color: "#4a4a7a", marginTop: 4, fontFamily: "monospace" }}>
+                <h1 className="text-[22px] font-extrabold tracking-tight">Task Groups</h1>
+                <p className="text-xs text-[#4a4a7a] mt-1 font-mono">
                   {groups.length} groups · {doneCount}/{allTasks.length} tasks completed
                 </p>
               </div>
-              <div style={{ display: "flex", gap: 10 }}>
-                <button style={{
-                  display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 9,
-                  background: "#0a0a2e", color: "#8888bb", border: "1px solid rgba(74,74,232,0.15)",
-                  fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit',sans-serif",
-                }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <div className="flex gap-2.5">
+                <button className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#0a0a2e] text-[#8888bb] border border-[rgba(74,74,232,0.15)] text-xs font-bold cursor-pointer">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
                   AI Generate
                 </button>
                 <button
                   onClick={() => setModal({ type: "addGroup" })}
-                  style={{
-                    display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 9,
-                    background: "#4a4ae8", color: "#fff", border: "none",
-                    fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit',sans-serif",
-                  }}
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#4a4ae8] text-white border-none text-xs font-bold cursor-pointer"
                 >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
                   New Group
                 </button>
               </div>
             </div>
 
             {/* Grid */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 18 }}>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4.5">
               {groups.map(g => (
                 <GroupCard
                   key={g.id} group={g}
@@ -562,19 +561,12 @@ export default function Tasks() {
               {/* Add group placeholder */}
               <div
                 onClick={() => setModal({ type: "addGroup" })}
-                style={{
-                  background: "transparent", border: "1px dashed rgba(74,74,232,0.15)",
-                  borderRadius: 14, minHeight: 160,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  cursor: "pointer", opacity: 0.5, transition: "opacity 0.2s",
-                }}
-                onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.opacity = "1"}
-                onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.opacity = "0.5"}
+                className="bg-transparent border border-dashed border-[rgba(74,74,232,0.15)] rounded-xl min-h-[160px] flex items-center justify-center cursor-pointer opacity-50 transition-opacity duration-200 hover:opacity-100"
               >
-                <div style={{ textAlign: "center", color: "#4a4a7a" }}>
-                  <div style={{ fontSize: 28, marginBottom: 8 }}>+</div>
-                  <div style={{ fontSize: 12, fontWeight: 600 }}>Add New Group</div>
-                  <div style={{ fontSize: 10, marginTop: 3 }}>Course, project, or topic</div>
+                <div className="text-center text-[#4a4a7a]">
+                  <div className="text-2xl mb-2">+</div>
+                  <div className="text-xs font-semibold">Add New Group</div>
+                  <div className="text-[10px] mt-1">Course, project, or topic</div>
                 </div>
               </div>
             </div>
