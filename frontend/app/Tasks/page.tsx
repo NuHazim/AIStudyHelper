@@ -271,7 +271,7 @@ function Modal({ children, onClose }: { children: React.ReactNode; onClose: () =
       className="fixed inset-0 bg-[rgba(5,5,16,0.85)] flex items-center justify-center z-[100]"
       onClick={e => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.3)] rounded-2xl w-[440px] overflow-hidden">
+      <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.3)] rounded-2xl w-[90vw] max-w-[440px] overflow-hidden">
         {children}
       </div>
     </div>
@@ -557,6 +557,27 @@ export default function Tasks() {
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap');
         .task-del-btn { opacity: 0; transition: opacity 0.15s; }
         .task-row:hover .task-del-btn { opacity: 1; }
+
+        /* Custom scrollbar - matches theme */
+        ::-webkit-scrollbar {
+          width: 6px;
+          height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+          background: #0a0a2e;
+          border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: #4a4ae8;
+          border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: #6b6bf0;
+        }
+        * {
+          scrollbar-width: thin;
+          scrollbar-color: #4a4ae8 #0a0a2e;
+        }
       `}</style>
 
       <div className="flex h-screen overflow-hidden" style={{ fontFamily: "'Outfit', sans-serif" }}>
@@ -565,17 +586,17 @@ export default function Tasks() {
           <LIHeader pageName="Tasks" pageDesc={`${groups.length} groups · ${doneCount}/${allTasks.length} tasks completed`} />
 
           {/* ── Scrollable content ── */}
-          <div className="flex-1 overflow-y-auto p-6 text-[#e8e8ff]">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-6">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 text-[#e8e8ff]">
+            {/* Header - responsive */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
               <div>
-                <h1 className="text-[22px] font-extrabold tracking-tight">Task Groups</h1>
+                <h1 className="text-xl sm:text-[22px] font-extrabold tracking-tight">Task Groups</h1>
                 <p className="text-xs text-[#4a4a7a] mt-1 font-mono">
                   {groups.length} groups · {doneCount}/{allTasks.length} tasks completed
                 </p>
               </div>
               <div className="flex gap-2.5">
-                <button className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#0a0a2e] text-[#8888bb] border border-[rgba(74,74,232,0.15)] text-xs font-bold cursor-pointer">
+                <button className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#0a0a2e] text-[#8888bb] border border-[rgba(74,74,232,0.15)] text-xs font-bold cursor-pointer hover:bg-[#141448] transition-colors">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
                   </svg>
@@ -583,7 +604,7 @@ export default function Tasks() {
                 </button>
                 <button
                   onClick={() => setModal({ type: "addGroup" })}
-                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#4a4ae8] text-white border-none text-xs font-bold cursor-pointer"
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#4a4ae8] text-white border-none text-xs font-bold cursor-pointer hover:bg-[#5a5af8] transition-colors"
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <line x1="12" y1="5" x2="12" y2="19"/>
@@ -594,8 +615,8 @@ export default function Tasks() {
               </div>
             </div>
 
-            {/* Grid */}
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4.5">
+            {/* Grid - auto-fill with responsive gap */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
               {groups.map(g => (
                 <GroupCard
                   key={g.id}
@@ -611,7 +632,7 @@ export default function Tasks() {
               {/* Add group placeholder */}
               <div
                 onClick={() => setModal({ type: "addGroup" })}
-                className="bg-transparent border border-dashed border-[rgba(74,74,232,0.15)] rounded-xl min-h-[160px] flex items-center justify-center cursor-pointer opacity-50 transition-opacity duration-200 hover:opacity-100"
+                className="bg-transparent border border-dashed border-[rgba(74,74,232,0.15)] rounded-xl min-h-[160px] flex items-center justify-center cursor-pointer opacity-50 transition-all duration-200 hover:opacity-100 hover:border-[rgba(74,74,232,0.3)]"
               >
                 <div className="text-center text-[#4a4a7a]">
                   <div className="text-2xl mb-2">+</div>
