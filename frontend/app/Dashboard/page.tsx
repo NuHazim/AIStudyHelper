@@ -244,15 +244,15 @@ export default function Dashboard() {
       <div className="flex flex-col flex-1 transition-all duration-300 ease-in-out bg-[#050510]">
         <LIHeader pageName="Dashboard" pageDesc="Monday, 30 May 2026 · Week 12 of Semester" />
 
-        <div className="flex-1 overflow-y-auto p-6 text-[#e8e8ff] relative">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 text-[#e8e8ff] relative">
           {/* Background glow */}
           <div className="fixed top-[-200px] left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full bg-[radial-gradient(ellipse,rgba(74,74,232,0.12)_0%,transparent_70%)] pointer-events-none z-0" />
 
           <div className="relative z-10">
             {/* Header */}
-            <div className="flex items-end justify-between mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-3">
               <div>
-                <div className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-[#e8e8ff] to-[#a78bfa] bg-clip-text text-transparent">
+                <div className="text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-[#e8e8ff] to-[#a78bfa] bg-clip-text text-transparent">
                   Good evening, Nufail 👋
                 </div>
                 <div className="text-xs text-[#4a4a7a] mt-1 font-mono">
@@ -261,17 +261,17 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Stat Cards */}
-            <div className="grid grid-cols-4 gap-3.5 mb-4">
+            {/* Stat Cards - responsive grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-4">
               {stats.map((card, i) => <StatCardItem key={i} card={card} />)}
             </div>
 
             {/* Middle Row - Chart only */}
             <div className="grid grid-cols-1 gap-4 mb-4">
-              <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-[18px]">
-                <div className="flex items-center justify-between mb-3.5">
+              <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-4 sm:p-[18px]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3.5">
                   <span className="text-[13px] font-bold text-[#e8e8ff]">Weekly Focus Activity</span>
-                  <span className="text-[10px] font-bold py-0.5 px-2 rounded-md bg-[rgba(74,74,232,0.18)] text-[#6b6bf0] font-mono">
+                  <span className="text-[10px] font-bold py-0.5 px-2 rounded-md bg-[rgba(74,74,232,0.18)] text-[#6b6bf0] font-mono self-start sm:self-auto">
                     This week
                   </span>
                 </div>
@@ -281,10 +281,10 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Bottom Row */}
-            <div className="grid grid-cols-3 gap-4">
+            {/* Bottom Row - responsive grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* AI Insights */}
-              <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-[18px]">
+              <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-4 sm:p-[18px]">
                 <div className="flex items-center justify-between mb-3.5">
                   <span className="text-[13px] font-bold text-[#e8e8ff]">✦ AI Insights</span>
                   <span className="text-[11px] text-[#6b6bf0] font-semibold cursor-pointer hover:text-[#a78bfa]">Chat →</span>
@@ -311,7 +311,7 @@ export default function Dashboard() {
               </div>
 
               {/* Upcoming Deadlines */}
-              <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-[18px]">
+              <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-4 sm:p-[18px]">
                 <div className="flex items-center justify-between mb-3.5">
                   <span className="text-[13px] font-bold text-[#e8e8ff]">Upcoming Deadlines</span>
                   <span className="text-[11px] text-[#6b6bf0] font-semibold cursor-pointer hover:text-[#a78bfa]">All →</span>
@@ -334,7 +334,7 @@ export default function Dashboard() {
               </div>
 
               {/* Quick Actions + Streak */}
-              <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-[18px]">
+              <div className="bg-[#0a0a2e] border border-[rgba(74,74,232,0.15)] rounded-xl p-4 sm:p-[18px]">
                 <div className="flex items-center justify-between mb-3.5">
                   <span className="text-[13px] font-bold text-[#e8e8ff]">Quick Actions</span>
                 </div>
